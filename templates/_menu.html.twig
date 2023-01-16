@@ -4,7 +4,7 @@
         <div class="row">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
-                    <a class="ms-3 navbar-brand" href="#">
+                    <a class="ms-3 nav-link disabled" href="#">
                         <img src="{{ asset('assets/logo.png') }}" alt="" width="50" height="50">
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,9 +17,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <i class="bi bi-basket"></i>
                             </li>
                             <!--Menú desplegat-->
                             <li class="nav-item dropdown">
@@ -35,6 +32,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link disabled">Disabled</a>
+                            </li>
+                            <!--Carret de la compra-->
+                            <li class="nav-item" id="basket">
+                                <a class="nav-link active">
+                                    <i class="bi bi-basket"></i>
+                                </a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search">
