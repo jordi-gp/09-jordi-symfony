@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
-use Doctrine\DBAL\Types\Types;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
@@ -14,61 +15,54 @@ class Usuario
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25)]
-    private ?string $nombre = null;
+    #[ORM\Column(length: 30)]
+    private ?string $name = null;
 
-    #[ORM\Column(length: 25)]
-    private ?string $usuario = null;
+    #[ORM\Column(length: 30)]
+    private ?string $username = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $email = null;
 
     #[ORM\Column(length: 30)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 25)]
-    private ?string $email = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
-
-    #[ORM\Column(length: 15)]
+    #[ORM\Column(length: 30)]
     private ?string $role = null;
+
+    #[ORM\OneToMany(mappedBy: 'usuario_id', targetEntity: Valoracion::class)]
+    private Collection $valoracions;
+
+    public function __construct()
+    {
+        $this->valoracions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNombre(): ?string
+    public function getName(): ?string
     {
-        return $this->nombre;
+        return $this->name;
     }
 
-    public function setNombre(string $nombre): self
+    public function setName(string $name): self
     {
-        $this->nombre = $nombre;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getUsuario(): ?string
+    public function getUsername(): ?string
     {
-        return $this->usuario;
+        return $this->username;
     }
 
-    public function setUsuario(string $usuario): self
+    public function setUsername(string $username): self
     {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
+        $this->username = $username;
 
         return $this;
     }
@@ -85,14 +79,14 @@ class Usuario
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getPassword(): ?string
     {
-        return $this->createdAt;
+        return $this->password;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setPassword(string $password): self
     {
-        $this->createdAt = $createdAt;
+        $this->password = $password;
 
         return $this;
     }
@@ -105,6 +99,36 @@ class Usuario
     public function setRole(string $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Valoracion>
+     */
+    public function getValoracions(): Collection
+    {
+        return $this->valoracions;
+    }
+
+    public function addValoracion(Valoracion $valoracion): self
+    {
+        if (!$this->valoracions->contains($valoracion)) {
+            $this->valoracions->add($valoracion);
+            $valoracion->setUsuarioId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeValoracion(Valoracion $valoracion): self
+    {
+        if ($this->valoracions->removeElement($valoracion)) {
+            // set the owning side to null (unless already changed)
+            if ($valoracion->getUsuarioId() === $this) {
+                $valoracion->setUsuarioId(null);
+            }
+        }
 
         return $this;
     }

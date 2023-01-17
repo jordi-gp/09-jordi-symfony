@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Vinil;
+use App\Entity\Valoracion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Vinil>
+ * @extends ServiceEntityRepository<Valoracion>
  *
- * @method Vinil|null find($id, $lockMode = null, $lockVersion = null)
- * @method Vinil|null findOneBy(array $criteria, array $orderBy = null)
- * @method Vinil[]    findAll()
- * @method Vinil[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Valoracion|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Valoracion|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Valoracion[]    findAll()
+ * @method Valoracion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class VinilRepository extends ServiceEntityRepository
+class ValoracionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Vinil::class);
+        parent::__construct($registry, Valoracion::class);
     }
 
-    public function save(Vinil $entity, bool $flush = false): void
+    public function save(Valoracion $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class VinilRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Vinil $entity, bool $flush = false): void
+    public function remove(Valoracion $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class VinilRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Vinil[] Returns an array of Vinil objects
+//     * @return Valoracion[] Returns an array of Valoracion objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class VinilRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Vinil
+//    public function findOneBySomeField($value): ?Valoracion
 //    {
 //        return $this->createQueryBuilder('v')
 //            ->andWhere('v.exampleField = :val')

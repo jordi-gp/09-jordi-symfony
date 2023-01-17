@@ -15,19 +15,25 @@ class Artista
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25)]
-    private ?string $nombre = null;
+    #[ORM\Column(length: 30)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 250)]
+    private ?string $description = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'artistas')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Discografica $id_discografica = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_artista', targetEntity: Vinil::class)]
-    private Collection $vinils;
+    #[ORM\OneToMany(mappedBy: 'id_artista', targetEntity: Vinilo::class)]
+    private Collection $vinilos;
 
     public function __construct()
     {
-        $this->vinils = new ArrayCollection();
+        $this->vinilos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -35,14 +41,38 @@ class Artista
         return $this->id;
     }
 
-    public function getNombre(): ?string
+    public function getName(): ?string
     {
-        return $this->nombre;
+        return $this->name;
     }
 
-    public function setNombre(string $nombre): self
+    public function setName(string $name): self
     {
-        $this->nombre = $nombre;
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }
@@ -60,29 +90,29 @@ class Artista
     }
 
     /**
-     * @return Collection<int, Vinil>
+     * @return Collection<int, Vinilo>
      */
-    public function getVinils(): Collection
+    public function getVinilos(): Collection
     {
-        return $this->vinils;
+        return $this->vinilos;
     }
 
-    public function addVinil(Vinil $vinil): self
+    public function addVinilo(Vinilo $vinilo): self
     {
-        if (!$this->vinils->contains($vinil)) {
-            $this->vinils->add($vinil);
-            $vinil->setIdArtista($this);
+        if (!$this->vinilos->contains($vinilo)) {
+            $this->vinilos->add($vinilo);
+            $vinilo->setIdArtista($this);
         }
 
         return $this;
     }
 
-    public function removeVinil(Vinil $vinil): self
+    public function removeVinilo(Vinilo $vinilo): self
     {
-        if ($this->vinils->removeElement($vinil)) {
+        if ($this->vinilos->removeElement($vinilo)) {
             // set the owning side to null (unless already changed)
-            if ($vinil->getIdArtista() === $this) {
-                $vinil->setIdArtista(null);
+            if ($vinilo->getIdArtista() === $this) {
+                $vinilo->setIdArtista(null);
             }
         }
 

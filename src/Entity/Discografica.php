@@ -15,8 +15,8 @@ class Discografica
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25)]
-    private ?string $nombre = null;
+    #[ORM\Column(length: 30)]
+    private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'id_discografica', targetEntity: Artista::class)]
     private Collection $artistas;
@@ -31,14 +31,14 @@ class Discografica
         return $this->id;
     }
 
-    public function getNombre(): ?string
+    public function getName(): ?string
     {
-        return $this->nombre;
+        return $this->name;
     }
 
-    public function setNombre(string $nombre): self
+    public function setName(string $name): self
     {
-        $this->nombre = $nombre;
+        $this->name = $name;
 
         return $this;
     }
