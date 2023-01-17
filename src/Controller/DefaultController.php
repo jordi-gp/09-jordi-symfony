@@ -21,13 +21,11 @@ class DefaultController extends AbstractController
     #[Route('/home', name: 'index')]
     public function index(UsuarioRepository $usuarioRepository): Response
     {
-        $message = "Benvingut a la tenda";
         $usuarios = $usuarioRepository->findOneBy([], ['username' => 'ASC']);
 
         dump($usuarios);
 
         return $this->render('default.html.twig', [
-            'message' => $message,
             #'usuario' => $usuarios,
         ]);
     }
