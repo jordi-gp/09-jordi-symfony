@@ -5,7 +5,9 @@ namespace App\Entity;
 use App\Repository\UsuarioRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
 class Usuario
@@ -16,15 +18,46 @@ class Usuario
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 5,
+        max: 30,
+        minMessage: 'El nom ha de contindre almenys 5 caracters',
+        maxMessage: 'El nom no pot contindre més de 30 caracters'
+    )]
     private ?string $name = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 5,
+        max: 30,
+        minMessage: "El nom d'usuari ha de contindre almenys 5 caracters",
+        maxMessage: "El nom d'usuari no pot contindre més de 30 caracters"
+    )]
     private ?string $username = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 10,
+        max: 50,
+        minMessage: "El correu ha de contindre almenys 10 caracters",
+        maxMessage: "El correu no pot contindre més de 50 caracters"
+    )]
+    #[Assert\Email(
+        message: "El correu indicat no es correcte"
+    )]
     private ?string $email = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 6,
+        max: 30,
+        minMessage: 'La contrasenya ha de contindre almenys 6 caracters',
+        maxMessage: 'La contrasenya no pot contindre més de 30 caracters'
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
@@ -32,6 +65,11 @@ class Usuario
 
     #[ORM\OneToMany(mappedBy: 'usuario_id', targetEntity: Valoracion::class)]
     private Collection $valoracions;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank]
+    #[Assert\GreaterThan("today")]
+    private ?\DateTimeInterface $createdAt = null;
 
     public function __construct()
     {
@@ -129,6 +167,18 @@ class Usuario
                 $valoracion->setUsuarioId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
