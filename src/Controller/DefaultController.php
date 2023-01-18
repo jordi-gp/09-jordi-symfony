@@ -23,10 +23,8 @@ class DefaultController extends AbstractController
     {
         $usuarios = $usuarioRepository->findOneBy([], ['username' => 'ASC']);
 
-        dump($usuarios);
-
         return $this->render('default.html.twig', [
-            #'usuario' => $usuarios,
+            'usuario' => $usuarios,
         ]);
     }
 }
