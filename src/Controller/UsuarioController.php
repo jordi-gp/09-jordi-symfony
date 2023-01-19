@@ -19,8 +19,7 @@ class UsuarioController extends AbstractController
         $user = new Usuario();
 
         $user->setCreatedAt(new DateTime());
-        $user->setRole('user');
-
+        $user->setRole('ROLE_USER');
 
         $form = $this->createForm(RegisterType::class, $user);
 

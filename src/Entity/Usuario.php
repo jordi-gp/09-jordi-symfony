@@ -7,10 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
-class Usuario
+class Usuario implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,17 +19,21 @@ class Usuario
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(
+        message: "S'ha d'emplenar aquest camp"
+    )]
     #[Assert\Length(
         min: 5,
         max: 30,
-        minMessage: 'El nom ha de contindre almenys 5 caracters',
-        maxMessage: 'El nom no pot contindre més de 30 caracters'
+        minMessage: "El nom ha de contindre almenys 5 caracters",
+        maxMessage: "El nom no pot contindre més de 30 caracters"
     )]
     private ?string $name = null;
 
     #[ORM\Column(length: 30)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(
+        message: "S'ha d'emplenar aquest camp"
+    )]
     #[Assert\Length(
         min: 5,
         max: 30,
@@ -38,7 +43,9 @@ class Usuario
     private ?string $username = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(
+        message: "S'ha d'emplenar aquest camp"
+    )]
     #[Assert\Length(
         min: 10,
         max: 50,
@@ -51,12 +58,14 @@ class Usuario
     private ?string $email = null;
 
     #[ORM\Column(length: 30)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(
+        message: "S'ha d'emplenar aquest camp"
+    )]
     #[Assert\Length(
         min: 6,
         max: 30,
-        minMessage: 'La contrasenya ha de contindre almenys 6 caracters',
-        maxMessage: 'La contrasenya no pot contindre més de 30 caracters'
+        minMessage: "La contrasenya ha de contindre almenys 6 caracters",
+        maxMessage: "La contrasenya no pot contindre més de 30 caracters"
     )]
     private ?string $password = null;
 
@@ -181,5 +190,27 @@ class Usuario
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        // TODO: Implement getRoles() method.
+        return ["ROLE_USER"];
+    }
+
+    public function getSalt(): string
+    {
+        // TODO: Implement getSalt() method.
+        return "";
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): ?string
+    {
+        return $this->getUsername();
     }
 }

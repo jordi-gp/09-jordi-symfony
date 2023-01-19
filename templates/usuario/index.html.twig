@@ -1,7 +1,16 @@
-{% block title %}Hello UsuarioController!{% endblock %}
-{% block body %}
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-    <input type="submit" value="Registrar" />
-    {{ form_end(form) }}
+{% extends 'default.html.twig' %}
+{% block title %}Registra't{% endblock %}
+{% block main %}
+    <div class="d-flex flex-row justify-content-center mt-2 mb-4">
+        <div class="col-6 col-md-4">
+            <h3 class="mb-2">Registra't</h3>
+            {{ form_start(form, { 'attr': { 'novalidate': 'novalidate' }}) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.username) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.password) }}
+                <input type="submit" class="btn btn-outline-primary" value="Registrar" />
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

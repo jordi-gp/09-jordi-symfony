@@ -20,11 +20,10 @@
     <header>
         {% include '_menu.html.twig' %}
     </header>
-    {% block main %}
-        <main>
-            {% include 'usuario/index.html.twig' %}
-        </main>
-    {% endblock %}
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
     <footer>
         {% include '_footer.html.twig' %}
     </footer>

@@ -13,7 +13,8 @@ class DefaultController extends AbstractController
     # Per a poder fer les migracions i utilitzar les bases de dades
     # cal executar en el terminal el comandament:
     # 'sudo docker exec -it 09-jordi-symfony-web-server-1 /bin/bash'
-    # si es treballa en l'equip local de casa el nom del servici es 2023-truiter-symfony-web-server-1
+    # en cas d'estar en classe el nom del servici es
+    # jordi 09-jordi-symfony_web-server_1
 
     # Per a comprovar el nom dels contenidors de docker gastar comandament:
     # 'sudo docker ps'
@@ -23,7 +24,7 @@ class DefaultController extends AbstractController
     {
         $usuarios = $usuarioRepository->findOneBy([], ['username' => 'ASC']);
 
-        return $this->render('default.html.twig', [
+        return $this->render('default/vinil.html.twig', [
             'usuario' => $usuarios,
         ]);
     }
