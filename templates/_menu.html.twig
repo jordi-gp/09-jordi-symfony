@@ -19,29 +19,32 @@
                             <a class="nav-link" href="#">Link</a>
                         </li>
                         <!--Menú desplegat-->
+                        {% if app.user %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                @usuario
+                                {{ app.user.username }}
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Perfil</a></li>
                                 <li><a class="dropdown-item" href="#">Vinils Guardats</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('logout') }}">Tanca Sessió</a>
+                                </li>
                             </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('login') }}">Inicia Sessió</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('register') }}">Registra't</a>
                         </li>
-                        <li>
-                            <a class="nav-link" href="#">
-                                <!--usuario.username-->
-                            </a>
-                        </li>
-                        <!--Carret de la compra-->
-                        <li class="nav-item" id="basket">
-                            <a class="nav-link active">
-                                <i class="bi bi-basket"></i>
-                            </a>
-                        </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Backoffice</a>
+                            </li>
+                        {% endif %}
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

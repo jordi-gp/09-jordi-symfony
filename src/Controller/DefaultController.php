@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Usuario;
 use App\Repository\UsuarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,9 +21,12 @@ class DefaultController extends AbstractController
     # 'sudo docker ps'
 
     #[Route('/home', name: 'index')]
-    public function index(UsuarioRepository $usuarioRepository): Response
+    public function index(Request $request, UsuarioRepository $usuarioRepository): Response
     {
         $usuarios = $usuarioRepository->findOneBy([], ['username' => 'ASC']);
+
+        $session = $request->getSession();
+        dump($session);
 
         return $this->render('default/vinil.html.twig', [
             'usuario' => $usuarios,
