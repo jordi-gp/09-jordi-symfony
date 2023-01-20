@@ -25,9 +25,6 @@ class DefaultController extends AbstractController
     {
         $usuarios = $usuarioRepository->findOneBy([], ['username' => 'ASC']);
 
-        $session = $request->getSession();
-        dump($session);
-
         return $this->render('default/vinil.html.twig', [
             'usuario' => $usuarios,
         ]);

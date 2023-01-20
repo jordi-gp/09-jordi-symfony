@@ -9,12 +9,13 @@ use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UsuarioController extends AbstractController
 {
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UsuarioRepository $usuarioRepository): Response
+    public function register(Request $request, UsuarioRepository $usuarioRepository, UserPasswordHasherInterface $hasher): Response
     {
         $user = new Usuario();
 
@@ -26,8 +27,17 @@ class UsuarioController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('plainPassword')->getData();
+            $hashedPassword = $plainPassword->hashPassword($user, $plainPassword);
+            $user->setPassword($hashedPassword);
             $usuarioRepository->save($user, true);
-            return $this->redirectToRoute('index');
+            #return $this->redirectToRoute('index');
+            # TODO:
+            /*return $userAuthenticator->authenticateUser(
+                $user,
+                $authenticator,
+                $request
+            )*/
         }
 
         return $this->renderForm('usuario/index.html.twig', [

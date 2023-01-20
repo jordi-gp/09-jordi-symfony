@@ -195,8 +195,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
-        return ["ROLE_USER"];
+        return [$this->getRole()];
     }
 
     public function getSalt(): string
