@@ -1,0 +1,43 @@
+<!--Header de la plana-->
+{% block header %}
+    <div class="container-fluid menu">
+        <div class="row">
+            <nav style="--bs-bg-opacity: .5;" class="navbar navbar-expand-lg bg-secondary bg-gradient">
+                <div class="container-fluid">
+                    <a class="ms-3 nav-link disabled" href="#">
+                        <img src="{{ asset('assets/admin.png') }}" alt="" width="50" height="50">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <!--Apartat Vinils-->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Gestió Vinils
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Gestionar Vinils</a></li>
+                                    <li><a class="dropdown-item" href="#">Afegir Vinil</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ path('logout') }}">Tanca Sessió</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--Apartat Usuaris-->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Gestió Usuaris
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Llistar Usuaris</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
