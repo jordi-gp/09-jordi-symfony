@@ -58,15 +58,15 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $email = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(
         message: "S'ha d'emplenar aquest camp"
     )]
     #[Assert\Length(
         min: 6,
-        max: 30,
+        max: 200,
         minMessage: "La contrasenya ha de contindre almenys 6 caracters",
-        maxMessage: "La contrasenya no pot contindre més de 30 caracters"
+        maxMessage: "La contrasenya no pot contindre més de 200 caracters"
     )]
     private ?string $password = null;
 
@@ -80,6 +80,9 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     #[Assert\GreaterThan("today")]
     private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profile = null;
 
     public function __construct()
     {
@@ -213,5 +216,17 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): ?string
     {
         return $this->getUsername();
+    }
+
+    public function getProfile(): ?string
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?string $profile): self
+    {
+        $this->profile = $profile;
+
+        return $this;
     }
 }
