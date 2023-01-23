@@ -1,0 +1,38 @@
+{% extends 'backoffice.html.twig' %}
+{% block title %}Backoffice - Gestió de Vinils{% endblock %}
+{% block main %}
+    <div class="container-fluid pb-4 d-flex col-12">
+        <div class="col-2"></div>
+        <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: lightblue">
+            <div class="col-8 mt-4 mb-2">
+                <h2>Llistat de Vinils</h2>
+                <table class="table table-bordered text-center" style="border-color: black; background: white">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Artista</th>
+                        <th scope="col">Preu</th>
+                        <th scope="col">Valoració</th>
+                        <th scope="col">Data Creació</th>
+                        <th scope="col">Accions</th>
+                    </tr>
+                    {% for vinilo in vinilos %}
+                        <tr>
+                            <td>{{ vinilo.id }}</td>
+                            <td>{{ vinilo.name }}</td>
+                            <td>{{ vinilo.price }}</td>
+                            <td>{{ vinilo.rating }}</td>
+                            <td>{{ vinilo.createdAt|date('Y-m-d') }}</td>
+                            <td>
+                                <div class="d-grid gap-2">
+                                    <button type="button" class="btn btn-primary">Editar</button>
+                                    <button type="button" class="btn btn-danger">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}

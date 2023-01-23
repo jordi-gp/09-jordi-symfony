@@ -30,7 +30,7 @@ class UsuarioController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        return $this->renderForm('usuario/_concreteVinil.html.twig', [
+        return $this->renderForm('usuario/index.html.twig', [
             'form' => $form,
         ]);
     }
