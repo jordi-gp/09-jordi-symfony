@@ -26,7 +26,7 @@ class Artista
 
     #[ORM\ManyToOne(inversedBy: 'artistas')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Discografica $id_discografica = null;
+    private ?Discografica $discografica = null;
 
     #[ORM\OneToMany(mappedBy: 'id_artista', targetEntity: Vinilo::class)]
     private Collection $vinilos;
@@ -77,14 +77,14 @@ class Artista
         return $this;
     }
 
-    public function getIdDiscografica(): ?Discografica
+    public function getDiscografica(): ?Discografica
     {
-        return $this->id_discografica;
+        return $this->discografica;
     }
 
-    public function setIdDiscografica(?Discografica $id_discografica): self
+    public function setDiscografica(?Discografica $discografica): self
     {
-        $this->id_discografica = $id_discografica;
+        $this->id_discografica = $discografica;
 
         return $this;
     }

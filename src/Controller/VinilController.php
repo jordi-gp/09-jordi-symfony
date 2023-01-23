@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VinilController extends AbstractController
 {
-    #[Route('/vinil/id={id}', name: 'concrete_vinil', requirements: ["id"=>"\d+"])]
+    #[Route('/vinil/{name}', name: 'concrete_vinil')]
     public function concrete_vinil(int $id): Response
     {
         $text = "Vinil amb id $id";

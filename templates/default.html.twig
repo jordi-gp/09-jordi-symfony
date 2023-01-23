@@ -18,14 +18,18 @@
 </head>
 <body>
     <header>
-        {% include '_menu.html.twig' %}
+        {% block header %}
+            {% include '_menu.html.twig' %}
+        {% endblock %}
     </header>
     <main>
         {% block main %}
         {% endblock %}
     </main>
     <footer>
-        {% include '_footer.html.twig' %}
+        {% block footer %}
+            {% include '_footer.html.twig' %}
+        {% endblock %}
     </footer>
 </body>
 </html>
