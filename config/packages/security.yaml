@@ -19,6 +19,7 @@ security:
             custom_authenticator: App\Security\CustomAuthenticator
             logout:
                 path: logout
+                target: index
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -41,7 +42,7 @@ security:
 when@test:
     security:
         password_hashers:
-            # By default, password hashers are resource intensive and take time. This is
+            # By home, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes
             # are not important, waste resources and increase test times. The following
             # reduces the work factor to the lowest possible values.

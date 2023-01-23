@@ -40,6 +40,9 @@ class AppFixtures extends Fixture
         $discografica = new Discografica();
         $discografica->setName('Patrick Records');
 
+        $manager->persist($discografica);
+        $manager->flush();
+
         #Artista
         $artista = new Artista();
         $artista->setName('Patrick Start');
@@ -47,16 +50,23 @@ class AppFixtures extends Fixture
         $artista->setPhoto('patrick.jpg');
         $artista->setDiscografica($discografica);
 
+        $manager->persist($artista);
+        $manager->flush();
+
         #Vinilo
         for($i=0; $i<6; $i++) {
             $vinilo = new Vinilo();
             $vinilo->setName('Default Vinil');
             $vinilo->setCreatedAt(new DateTime());
-            #$vinilo->setArtista();
+            $vinilo->setArtista($artista);
             $vinilo->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
             $vinilo->setPrice(99);
             $vinilo->setRating(4.9);
             $vinilo->setCover('patrick.jpg');
+
+            $manager->persist($vinilo);
         }
+
+        $manager->flush();
     }
 }

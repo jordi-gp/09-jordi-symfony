@@ -28,7 +28,7 @@ class Artista
     #[ORM\JoinColumn(nullable: false)]
     private ?Discografica $discografica = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_artista', targetEntity: Vinilo::class)]
+    #[ORM\OneToMany(mappedBy: 'artista', targetEntity: Vinilo::class)]
     private Collection $vinilos;
 
     public function __construct()
@@ -84,7 +84,7 @@ class Artista
 
     public function setDiscografica(?Discografica $discografica): self
     {
-        $this->id_discografica = $discografica;
+        $this->discografica = $discografica;
 
         return $this;
     }

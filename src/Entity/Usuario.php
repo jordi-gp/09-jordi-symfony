@@ -87,6 +87,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->valoracions = new ArrayCollection();
+        $this->role = "ROLE_USER";
     }
 
     public function getId(): ?int
@@ -199,7 +200,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         // TODO: Implement getRoles() method.
-        return ["ROLE_USER"];
+        return [$this->getRole()];
     }
 
     public function getSalt(): string

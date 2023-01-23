@@ -1,0 +1,41 @@
+{% extends 'backoffice.html.twig' %}
+{% block title %}Backoffice - Gestió d'usuaris{% endblock %}
+{% block main %}
+    <div class="container-fluid pb-4 d-flex col-12">
+        <div class="col-2"></div>
+            <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: lightblue">
+                <div class="col-8 mt-4 mb-2">
+                    <h2>Llistat d'usuaris</h2>
+                    <table class="table table-bordered text-center" style="border-color: black; background: white">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Usuari</th>
+                            <th scope="col">Correu</th>
+                            <th scope="col">Data Creació</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Accions</th>
+                        </tr>
+                        {% for usuari in usuaris %}
+                            <tr>
+                                <td>{{ usuari.id }}</td>
+                                <td>{{ usuari.name }}</td>
+                                <td>{{ usuari.username }}</td>
+                                <td>{{ usuari.email }}</td>
+                                <td>{{ usuari.createdAt|date('Y-m-d') }}</td>
+                                <td>{{ usuari.role }}</td>
+
+                                <td>
+                                    <div class="d-grid gap-2">
+                                        <button type="button" class="btn btn-primary">Editar</button>
+                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}
