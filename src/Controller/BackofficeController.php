@@ -10,7 +10,9 @@ use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Validator\Constraints\Date;
 
 class BackofficeController extends AbstractController
@@ -23,7 +25,7 @@ class BackofficeController extends AbstractController
         ]);
     }
 
-    #[Route('/backoffice/usuaris', name: 'gestioUsuaris')]
+    #[Route('/backoffice/users', name: 'gestioUsuaris')]
     public function gestioUsuaris(UsuarioRepository $usuarioRepository): Response
     {
         $usuaris = $usuarioRepository->findAll();
@@ -34,12 +36,11 @@ class BackofficeController extends AbstractController
         ]);
     }
 
-    #[Route('/backoffice/new/Usuario', name: 'nuevoUsuario')]
-    public function newUsuario(Request $request, UsuarioRepository $usuarioRepository): Response
+    #[Route('/backoffice/users/new', name: 'nuevoUsuario')]
+    public function newUsuario(Request $request, UsuarioRepository $usuarioRepository,
+                               UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $usuario = new Usuario();
-
-        $usuario->setCreatedAt(new DateTime());
 
         $roles = [];
         array_push($roles, 'ROLE_USER', 'ROLE_ADMIN');
@@ -48,7 +49,16 @@ class BackofficeController extends AbstractController
 
         $form->handleRequest($request);
 
+        $usuario->setCreatedAt(new DateTime());
+
         if($form->isSubmitted() && $form->isValid()) {
+            $usuario->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $usuario,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
             $usuarioRepository->save($usuario, true);
             return $this->redirectToRoute('index');
         }
@@ -56,6 +66,16 @@ class BackofficeController extends AbstractController
         return $this->renderForm('backoffice/_new_user.html.twig', [
             'form' => $form,
             'roles' => $roles
+        ]);
+    }
+
+    #[Route('/backoffice/users/edit/id={id}', name: 'editUsers')]
+    public function editaUsuari(UsuarioRepository $usuarioRepository, Usuario $usuario)
+    {
+        $user = $usuarioRepository->findOneBy(['id'=> $usuario]);
+
+        return $this->render('backoffice/_edit_usuari.html.twig', [
+            'usuario' => $user
         ]);
     }
 

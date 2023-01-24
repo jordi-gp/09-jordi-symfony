@@ -21,7 +21,10 @@ class UsuarioType extends AbstractType
                 [
                     'attr' => ['placeholder' => 'example@gmail.com']
                 ])
-            ->add('password', PasswordType::class)
+            ->add('plainPassword', PasswordType::class,
+                [
+                    'mapped' => false
+                ])
             ->add('role', ChoiceType::class,
                 [
                     'choices' => [

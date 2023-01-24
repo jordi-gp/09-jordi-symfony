@@ -27,7 +27,11 @@ class RegisterType extends AbstractType
                 [
                     'attr' => ['placeholder' => 'exemple@example.com']
                 ])
-            ->add('password', PasswordType::class)
+            ->add('plainPassword', PasswordType::class,
+                [
+                    'label' => 'Contrasenya',
+                    'mapped' => false
+                ])
         ;
     }
 

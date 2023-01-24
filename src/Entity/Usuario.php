@@ -59,15 +59,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(
-        message: "S'ha d'emplenar aquest camp"
-    )]
-    #[Assert\Length(
-        min: 6,
-        max: 200,
-        minMessage: "La contrasenya ha de contindre almenys 6 caracters",
-        maxMessage: "La contrasenya no pot contindre més de 200 caracters"
-    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
@@ -77,8 +68,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $valoracions;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank]
-    #[Assert\GreaterThan("today")]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -27,7 +27,11 @@
 
                                 <td>
                                     <div class="d-grid gap-2">
-                                        <button type="button" class="btn btn-primary">Editar</button>
+                                        <button type="button" class="btn btn-primary">
+                                            <a href="{{ path('editUsers/', {'id': usuari.id}) }}" style="text-decoration: none; color: white;">
+                                                Editar
+                                            </a>
+                                        </button>
                                         <button type="button" class="btn btn-danger">Eliminar</button>
                                     </div>
                                 </td>

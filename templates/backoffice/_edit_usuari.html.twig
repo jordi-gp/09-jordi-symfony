@@ -1,0 +1,9 @@
+{% extends 'backoffice.html.twig' %}
+{% block title %}Backoffice - Editar Usuari{% endblock %}
+{% block main %}
+    {% if usuario.id %}
+        {{ usuario.name }}
+    {% else %}
+        <p>No existeix un usuari amb el id indicat</p>
+    {% endif %}
+{% endblock %}
