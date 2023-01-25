@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Artista;
 use App\Entity\Discografica;
+use App\Entity\Genero;
 use App\Entity\Usuario;
 use App\Entity\Vinilo;
 use DateTime;
@@ -43,17 +44,25 @@ class AppFixtures extends Fixture
         $manager->persist($discografica);
         $manager->flush();
 
+        #Genere
+        $genero = new Genero();
+        $genero->setName('Post-Punk');
+
+        $manager->persist($genero);
+        $manager->flush();
+
         #Artista
-        $artista = new Artista();
+        /*$artista = new Artista();
         $artista->setName('Cicatriz');
         $artista->setDescription('Grup punk dels anys 80.');
         $artista->setPhoto('patrick.jpg');
         $artista->setDiscografica($discografica);
 
         $manager->persist($artista);
-        $manager->flush();
+        $manager->flush();*/
 
         #Artista 2
+        $artista = new Artista();
         $artista->setName('Depresión Sonora');
         $artista->setDescription('Grup de post-punk');
         $artista->setPhoto('patrick.jpg');
@@ -63,16 +72,16 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         #Artista 3
-        $artista->setName('El Pau');
+        /*$artista->setName('El Pau');
         $artista->setDescription('Cantautor català');
         $artista->setPhoto('patrick.jpg');
         $artista->setDiscografica($discografica);
 
         $manager->flush($artista);
-        $manager->flush();
+        $manager->flush();*/
 
         #Vinilo
-        $vinilo = new Vinilo();
+        /*$vinilo = new Vinilo();
         $vinilo->setName('Inadaptados');
         $vinilo->setCreatedAt(new DateTime());
         $vinilo->setArtista($artista);
@@ -82,7 +91,7 @@ class AppFixtures extends Fixture
         $vinilo->setCover('cicatriz.jpg');
 
         $manager->persist($vinilo);
-        $manager->flush();
+        $manager->flush();*/
 
         #Vinilo 2
         $vinilo = new Vinilo();
@@ -98,7 +107,7 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         #Vinilo 3
-        $vinilo = new Vinilo();
+        /*$vinilo = new Vinilo();
         $vinilo->setName('Antes de que llegue el invierno');
         $vinilo->setCreatedAt(new DateTime());
         $vinilo->setArtista($artista);
@@ -108,6 +117,6 @@ class AppFixtures extends Fixture
         $vinilo->setCover('elPau.jpg');
 
         $manager->persist($vinilo);
-        $manager->flush();
+        $manager->flush();*/
     }
 }

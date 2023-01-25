@@ -11,11 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class VinilController extends AbstractController
 {
     #[Route('/vinils/list', name: 'vinil_list')]
-    public function listVinils(ViniloRepository $viniloRepository, Vinilo $vinilo): Response
+    public function listVinils(ViniloRepository $viniloRepository): Response
     {
+        $vinilos = $viniloRepository->findAll();
 
 
-        return $this->render('vinil/_allVinils.html.twig');
+        return $this->render('vinil/_allVinils.html.twig', [
+            'vinilos' => $vinilos
+        ]);
     }
 
     #[Route('/vinil/id={id}', name: 'concrete_vinil')]
@@ -23,8 +26,11 @@ class VinilController extends AbstractController
     {
         $vinil = $viniloRepository->findOneBy(['id' => $vinilo]);
         dump($vinil);
+        return $this->render('vinil/_concreteVinil.html.twig', [
+            'vinilo' => $vinil,
+        ]);
 
-        if(!$vinil)
+        /*if(!$vinil)
         {
             $message = "No existeix un vinil amb el id introduït";
 
@@ -35,6 +41,6 @@ class VinilController extends AbstractController
             return $this->render('vinil/_concreteVinil.html.twig', [
                 'vinilo' => $vinil,
             ]);
-        }
+        }*/
     }
 }

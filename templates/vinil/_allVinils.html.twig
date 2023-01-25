@@ -2,4 +2,21 @@
 
 {% block title %}Vinils{% endblock %}
 {% block main %}
+    <div class="container-fluid pb-4 d-flex col-12">
+        <div class="col-2"></div>
+        <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: #AAAAAA">
+            {% for vinilo in vinilos %}
+                <div class="card mt-4 mb-4" style="width: 18rem;">
+                    <img src="{{ asset( 'assets/covers/' ~ vinilo.cover ) }}" class="card-img-top" alt="Portada Vinil">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ vinilo.name }}</h5>
+                        <p>Valoració {{ vinilo.rating }}</p>
+                        <p class="card-text">{{ vinilo.description }}</p>
+                        <a href="{{ path('concrete_vinil', {'id': vinilo.id}) }}" class="btn btn-primary">Més informació</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-2"></div>
+    </div>
 {% endblock %}

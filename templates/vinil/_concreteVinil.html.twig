@@ -1,32 +1,38 @@
 {% extends 'default.html.twig' %}
 
-{% block title %}Hello VinilController!{% endblock %}
+{% block title %}Vinils - {{ vinilo.name }}{% endblock %}
 
 {% block main %}
+    <style>
+        p{
+            font-size: 15px;
+        }
+
+        .titolCamp{
+            font-weight: bold;
+        }
+    </style>
     <div class="container-fluid pb-4 d-flex col-12">
-        <div class="col-2"></div>
-        <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="flex-wrap: wrap; border-radius: 10px; background: #AAAAAA">
+        <div class="col-3"></div>
+        <div class="col-6 d-flex flex-row mt-4 justify-content-center" style="flex-wrap: wrap; border-radius: 10px; background: #AAAAAA">
             <div class="col-6">
-                <img src="{{ asset( 'assets/' ~ vinilo.cover ) }}" style="width: 100%; border-radius: 10px; border: 1px solid black;"  alt="Vinil Cover" />
+                <img src="{{ asset( 'assets/covers/' ~ vinilo.cover ) }}" style="width: 90%; border-radius: 10px; border: 1px solid black;"  alt="Vinil Cover" />
             </div>
-            <div class="col-6 d-flex mt-4 flex-column">
+            <div class="col-4 d-flex mt-4 flex-column">
                 <h3 class="text-center">Informació del vinil</h3>
-                <ul class="mt-4">
-                    <li>
-                        Artista: {{ vinilo.artista.name }}
-                    </li>
-                    <li>
-                        Preu: {{ vinilo.price }}€
-                    </li>
-                    <li>
-                        Valoracio: {{ vinilo.rating }}
-                    </li>
-                    <li>
-                        Genere: Per fer
-                    </li>
-                </ul>
+                <p class="titolCamp">Artista: {{ vinilo.artista.name }}</p>
+                <p class="titolCamp">Descripció: {{ vinilo.description }}</p>
+                <p class="titolCamp">Génere:</p>
+                <p class="titolCamp">Preu: {{ vinilo.price }}</p>
+                <p class="titolCamp">Valoració: {{ vinilo.rating }}</p>
+                {% if app.user %}
+                    <button type="button" class="btn btn-warning">
+                        <a href="#">Afegir a favorits</a>
+                    </button>
+                {% endif %}
             </div>
+            <div class="col-2"></div>
         </div>
-        <div class="col-2"></div>
+        <div class="col-3"></div>
     </div>
 {% endblock %}
