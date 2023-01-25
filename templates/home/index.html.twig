@@ -10,7 +10,7 @@
                         <h5 class="card-title">{{ vinilo.name }}</h5>
                         <p>Valoració {{ vinilo.rating }}</p>
                         <p class="card-text">{{ vinilo.description }}</p>
-                        <a href="#" class="btn btn-primary">Més informació</a>
+                        <a href="{{ path('concrete_vinil', {'id': vinilo.id}) }}" class="btn btn-primary">Més informació</a>
                     </div>
                 </div>
             {% endfor %}
