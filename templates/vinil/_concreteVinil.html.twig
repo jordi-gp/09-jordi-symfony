@@ -7,10 +7,24 @@
         <div class="col-2"></div>
         <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="flex-wrap: wrap; border-radius: 10px; background: #AAAAAA">
             <div class="col-6">
-                <img src="{{ asset( 'assets/' ~ vinilo.cover ) }}" style="width: 100%; border-radius: 10px;"  alt="Vinil Cover" />
+                <img src="{{ asset( 'assets/' ~ vinilo.cover ) }}" style="width: 100%; border-radius: 10px; border: 1px solid black;"  alt="Vinil Cover" />
             </div>
-            <div class="col-6 d-flex justify-content-center">
-                <h3>Informació del vinil</h3>
+            <div class="col-6 d-flex mt-4 flex-column">
+                <h3 class="text-center">Informació del vinil</h3>
+                <ul class="mt-4">
+                    <li>
+                        Artista: {{ vinilo.artista.name }}
+                    </li>
+                    <li>
+                        Preu: {{ vinilo.price }}€
+                    </li>
+                    <li>
+                        Valoracio: {{ vinilo.rating }}
+                    </li>
+                    <li>
+                        Genere: Per fer
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="col-2"></div>

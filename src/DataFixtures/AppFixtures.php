@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
             $vinilo->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
             $vinilo->setPrice(99);
             $vinilo->setRating(4.9);
-            $vinilo->setCover('patrick.jpg');
+            $vinilo->setCover('cicatriz.jpg');
 
             $manager->persist($vinilo);
         }

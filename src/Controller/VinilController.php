@@ -22,6 +22,7 @@ class VinilController extends AbstractController
     public function concreteVinil(ViniloRepository $viniloRepository, Vinilo $vinilo): Response
     {
         $vinil = $viniloRepository->findOneBy(['id' => $vinilo]);
+        dump($vinil);
 
         if(!$vinil)
         {
