@@ -43,4 +43,10 @@ class UsuarioController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/profile', name: 'profile')]
+    public function profile(): Response
+    {
+
+    }
 }
