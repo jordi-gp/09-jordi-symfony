@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Artista;
 use App\Entity\Discografica;
+use App\Entity\Genero;
 use App\Entity\Usuario;
 use App\Entity\Vinilo;
 use DateTime;
@@ -43,16 +44,34 @@ class AppFixtures extends Fixture
         $manager->persist($discografica);
         $manager->flush();
 
+        #Genere
+        $genero = new Genero();
+        $genero->setName('Post-Punk');
+
+        $manager->persist($genero);
+        $manager->flush();
+
         #Artista
+        /*$artista = new Artista();
+        $artista->setName('Cicatriz');
+        $artista->setDescription('Grup punk dels anys 80.');
+        $artista->setPhoto('patrick.jpg');
+        $artista->setDiscografica($discografica);
+
+        $manager->persist($artista);
+        $manager->flush();*/
+
+        #Artista 2
         $artista = new Artista();
-        $artista->setName('Patrick Start');
-        $artista->setDescription('Patrick Star group');
+        $artista->setName('Depresión Sonora');
+        $artista->setDescription('Grup de post-punk');
         $artista->setPhoto('patrick.jpg');
         $artista->setDiscografica($discografica);
 
         $manager->persist($artista);
         $manager->flush();
 
+<<<<<<< HEAD
         $artista2 = new Artista();
         $artista2->setName('Cicatriz');
         $artista2->setDescription('Grup Vasc dels anys 80');
@@ -96,10 +115,54 @@ class AppFixtures extends Fixture
             $vinilo->setPrice(99);
             $vinilo->setRating(4.9);
             $vinilo->setCover('patrick.jpg');
+=======
+        #Artista 3
+        /*$artista->setName('El Pau');
+        $artista->setDescription('Cantautor català');
+        $artista->setPhoto('patrick.jpg');
+        $artista->setDiscografica($discografica);
 
-            $manager->persist($vinilo);
-        }
+        $manager->flush($artista);
+        $manager->flush();*/
 
+        #Vinilo
+        /*$vinilo = new Vinilo();
+        $vinilo->setName('Inadaptados');
+        $vinilo->setCreatedAt(new DateTime());
+        $vinilo->setArtista($artista);
+        $vinilo->setDescription('Primer disc del grup Vasc');
+        $vinilo->setPrice(15);
+        $vinilo->setRating(4);
+        $vinilo->setCover('cicatriz.jpg');
+>>>>>>> 711f66d50d87d7052b14d584439effbe902b913a
+
+        $manager->persist($vinilo);
+        $manager->flush();*/
+
+        #Vinilo 2
+        $vinilo = new Vinilo();
+        $vinilo->setName('Depresión Sonora');
+        $vinilo->setCreatedAt(new DateTime());
+        $vinilo->setArtista($artista);
+        $vinilo->setDescription("Albúm homònim i segon treball de l'artista");
+        $vinilo->setPrice(20);
+        $vinilo->setRating(4.5);
+        $vinilo->setCover('depresionSonora.jpg');
+
+        $manager->persist($vinilo);
         $manager->flush();
+
+        #Vinilo 3
+        /*$vinilo = new Vinilo();
+        $vinilo->setName('Antes de que llegue el invierno');
+        $vinilo->setCreatedAt(new DateTime());
+        $vinilo->setArtista($artista);
+        $vinilo->setDescription('Segon albúm grabat en estudio per el cantautor');
+        $vinilo->setPrice(20);
+        $vinilo->setRating(3.4);
+        $vinilo->setCover('elPau.jpg');
+
+        $manager->persist($vinilo);
+        $manager->flush();*/
     }
 }

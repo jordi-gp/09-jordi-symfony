@@ -5,7 +5,11 @@
         <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: #AAAAAA">
             {% for vinilo in vinilos %}
                 <div class="card mt-4 mb-4" style="width: 18rem;">
+<<<<<<< HEAD
                     <img src="{{ asset( 'assets/' ~ vinilo.cover ) }}" style="width: 286px; height: 286px;" class="card-img-top" alt="Portada Vinil">
+=======
+                    <img src="{{ asset( 'assets/covers/' ~ vinilo.cover ) }}" class="card-img-top" alt="Portada Vinil">
+>>>>>>> 711f66d50d87d7052b14d584439effbe902b913a
                     <div class="card-body">
                         <h5 class="card-title">{{ vinilo.name }}</h5>
                         <p>Valoració {{ vinilo.rating }}</p>
