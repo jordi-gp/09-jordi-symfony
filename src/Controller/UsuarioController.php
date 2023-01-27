@@ -49,10 +49,4 @@ class UsuarioController extends AbstractController
     {
         return $this->render('usuario/_profile.html.twig');
     }
-
-    #[Route('/profile', name: 'profile')]
-    public function profile(): Response
-    {
-
-    }
 }

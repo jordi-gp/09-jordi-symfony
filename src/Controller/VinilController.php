@@ -15,10 +15,6 @@ class VinilController extends AbstractController
     {
         $vinilos = $viniloRepository->findAll();
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 711f66d50d87d7052b14d584439effbe902b913a
         return $this->render('vinil/_allVinils.html.twig', [
             'vinilos' => $vinilos
         ]);
@@ -27,14 +23,13 @@ class VinilController extends AbstractController
     #[Route('/vinil/{id}', name: 'concrete_vinil')]
     public function concreteVinil(Vinilo $vinilo): Response
     {
-<<<<<<< HEAD
         return $this->render('vinil/_concreteVinil.html.twig', [
             'vinilo' => $vinilo,
         ]);
 
         //TODO: Revisar quan el projecte estiga en producció
         /*if(!$vinilo)
-=======
+
         $vinil = $viniloRepository->findOneBy(['id' => $vinilo]);
         dump($vinil);
         return $this->render('vinil/_concreteVinil.html.twig', [
@@ -42,7 +37,7 @@ class VinilController extends AbstractController
         ]);
 
         /*if(!$vinil)
->>>>>>> 711f66d50d87d7052b14d584439effbe902b913a
+
         {
             $message = "No existeix un vinil amb el id introduït";
 
