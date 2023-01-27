@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UsuarioController extends AbstractController
 {
-    #[Route('/register', name: 'register')]
+   /* #[Route('/register', name: 'register')]
     public function register(Request $request, UsuarioRepository $usuarioRepository,
                              UserPasswordHasherInterface $userPasswordHasher): Response
     {
@@ -42,5 +42,11 @@ class UsuarioController extends AbstractController
         return $this->renderForm('usuario/index.html.twig', [
             'form' => $form,
         ]);
+    }*/
+
+    #[Route('/profile', name: 'profile')]
+    public function profile(): Response
+    {
+        return $this->render('usuario/_profile.html.twig');
     }
 }

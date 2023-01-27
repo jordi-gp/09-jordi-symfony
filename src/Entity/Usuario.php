@@ -7,11 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[Vich\Uploadable]
 class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -72,6 +78,25 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profile = null;
+
+    #[UploadableField(mapping: 'profiles', fileNameProperty: 'profile')]
+    private ?File $fileProfile = null;
+
+    /**
+     * @return File|null
+     */
+    public function getFileProfile(): ?File
+    {
+        return $this->fileProfile;
+    }
+
+    /**
+     * @param File|null $fileProfile
+     */
+    public function setFileProfile(?File $fileProfile): void
+    {
+        $this->fileProfile = $fileProfile;
+    }
 
     public function __construct()
     {

@@ -53,6 +53,39 @@ class AppFixtures extends Fixture
         $manager->persist($artista);
         $manager->flush();
 
+        $artista2 = new Artista();
+        $artista2->setName('Cicatriz');
+        $artista2->setDescription('Grup Vasc dels anys 80');
+        $artista2->setPhoto('cicatriz.jpg');
+        $artista2->setDiscografica($discografica);
+
+        $manager->persist($artista2);
+        $manager->flush();
+
+        $vinilo = new Vinilo();
+        $vinilo->setName('Default Vinil');
+        $vinilo->setCreatedAt(new DateTime());
+        $vinilo->setArtista($artista);
+        $vinilo->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+        $vinilo->setPrice(99);
+        $vinilo->setRating(4.9);
+        $vinilo->setCover('patrick.jpg');
+
+        $manager->persist($vinilo);
+        $manager->flush();
+
+        $vinilo2 = new Vinilo();
+        $vinilo2->setName('Inadaptados');
+        $vinilo2->setCreatedAt(new DateTime());
+        $vinilo2->setArtista($artista2);
+        $vinilo2->setDescription('Primer disc del grup');
+        $vinilo2->setPrice(20);
+        $vinilo2->setRating(5);
+        $vinilo2->setCover('cicatriz.jpg');
+
+        $manager->persist($vinilo2);
+        $manager->flush();
+
         #Vinilo
         for($i=0; $i<6; $i++) {
             $vinilo = new Vinilo();
@@ -62,7 +95,7 @@ class AppFixtures extends Fixture
             $vinilo->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
             $vinilo->setPrice(99);
             $vinilo->setRating(4.9);
-            $vinilo->setCover('cicatriz.jpg');
+            $vinilo->setCover('patrick.jpg');
 
             $manager->persist($vinilo);
         }
