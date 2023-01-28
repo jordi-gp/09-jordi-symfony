@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Usuario;
-use App\Form\RegisterType;
+#use App\Form\RegisterType;
 use App\Repository\UsuarioRepository;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,8 +45,11 @@ class UsuarioController extends AbstractController
     }*/
 
     #[Route('/profile', name: 'profile')]
-    public function profile(): Response
+    public function profile(Request $request): Response
     {
+        $session = $request->getSession();
+        dump($session);
+
         return $this->render('usuario/_profile.html.twig');
     }
 }

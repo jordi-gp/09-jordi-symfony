@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Usuario;
 use App\Form\RegistrationFormType;
 use App\Security\CustomAuthenticator;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,8 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            $user->setCreatedAt(new DateTime());
 
             $entityManager->persist($user);
             $entityManager->flush();

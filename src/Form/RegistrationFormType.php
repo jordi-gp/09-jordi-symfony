@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\Usuario;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,8 +22,27 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('username')
+            ->add('name', TextType::class)
+            ->add('username', TextType::class, [
+                'constraints' => [
+                    new NotBlank(
+                        ['message' => 'Aquest camp no pot estar en blanc']
+                    ),
+
+                    new Length([
+                        'min' => 3,
+                        'max' => 30,
+                        'maxMessage' => "El nom d'usuari no pot ser superior a {{ limit }}"
+                    ])
+                ]
+            ])
+            ->add('email', EmailType::class, [
+                'constraints' => [
+                    new NotBlank(
+                        ['message' => "S' ha d'introduir un correu electrónic"]
+                    )
+                ]
+            ])
             ->add('fileProfile', VichFileType::class, [
                 'constraints' => [
                     new File([

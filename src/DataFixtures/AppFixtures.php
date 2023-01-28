@@ -119,7 +119,7 @@ class AppFixtures extends Fixture
 
         #Vinilo 3
         $vinilo3 = new Vinilo();
-        $vinilo3->setName('Antes de que llegue el invierno');
+        $vinilo3->setName('Antes que llegue el invierno');
         $vinilo3->setCreatedAt(new DateTime());
         $vinilo3->setArtista($artista);
         $vinilo3->setDescription('Segon albúm grabat en estudio per el cantautor');
