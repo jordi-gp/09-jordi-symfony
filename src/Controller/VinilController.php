@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Vinilo;
+use App\Repository\ArtistaRepository;
 use App\Repository\ViniloRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,11 +12,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class VinilController extends AbstractController
 {
     #[Route('/vinils/list', name: 'vinil_list')]
-    public function listVinils(ViniloRepository $viniloRepository): Response
+    public function listVinils(ViniloRepository $viniloRepository, ArtistaRepository $artistaRepository): Response
     {
         $vinilos = $viniloRepository->findAll();
+        $artistas = $artistaRepository->findAll();
 
         return $this->render('vinil/_allVinils.html.twig', [
+            'vinilos' => $vinilos,
+            'artistas' => $artistas
+        ]);
+    }
+
+    # Filtre per trobar els vinils d'un artista en concret
+    #[Route('/vinils/artista/{name}', name:'vinil_by_artist')]
+    public function vinilByArtis(ViniloRepository $viniloRepository): Response
+    {
+        #TODO: Preguntar per aquesta part en classe
+        $vinilos = $viniloRepository->findBy(['artista_id' => 'ASC']);
+
+        return $this->render('vinil/_vinilByArtist.html.twig', [
             'vinilos' => $vinilos
         ]);
     }

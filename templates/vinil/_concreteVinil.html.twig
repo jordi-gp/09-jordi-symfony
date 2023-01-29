@@ -7,10 +7,6 @@
         p{
             font-size: 15px;
         }
-
-        .titolCamp{
-            font-weight: bold;
-        }
     </style>
     <div class="container-fluid pb-4 d-flex col-12">
         <div class="col-3"></div>
@@ -20,11 +16,15 @@
             </div>
             <div class="col-4 d-flex mt-4 flex-column">
                 <h3 class="text-center">Informació del vinil</h3>
-                <p class="titolCamp">Artista: {{ vinilo.artista.name }}</p>
-                <p class="titolCamp">Descripció: {{ vinilo.description }}</p>
-                <p class="titolCamp">Génere:</p>
-                <p class="titolCamp">Preu: {{ vinilo.price }}</p>
-                <p class="titolCamp">Valoració: {{ vinilo.rating }}</p>
+                <h5>Artista</h5>
+                    <p>{{ vinilo.artista.name }}</p>
+                <h5>Descripció</h5>
+                    <p>{{ vinilo.description }}</p>
+                <h5>Génere</h5>
+                <h5>Preu</h5>
+                    <p>{{ vinilo.price }}</p>
+                <h5>Valoració</h5>
+                    <p>{{ vinilo.rating }}</p>
                 {% if app.user %}
                     <button type="button" class="btn btn-warning">
                         <a href="#">Afegir a favorits</a>
@@ -38,10 +38,11 @@
     <div class="container-fluid col-6 d-flex justify-content-center flex-column">
         <h3>Comentaris</h3>
         {% if app.user %}
-
+            <label for="exampleFormControlTextarea1" class="form-label">Afig un comentari</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         {% else %}
             <p>
-                <a href="{{ path('login') }}">Inicia sessió</a> per poder posar i vore comentaris o <a href="{{ path('register') }}">registra't</a> si no tens un compter.
+                <a href="{{ path('login') }}">Inicia sessió</a> per poder afegir o vore comentaris o <a href="{{ path('register') }}">registra't</a> si no tens un compter.
             </p>
         {% endif %}
     </div>

@@ -14,41 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UsuarioController extends AbstractController
 {
-   /* #[Route('/register', name: 'register')]
-    public function register(Request $request, UsuarioRepository $usuarioRepository,
-                             UserPasswordHasherInterface $userPasswordHasher): Response
-    {
-        $user = new Usuario();
-
-        $user->setCreatedAt(new DateTime());
-        $user->setRole('ROLE_USER');
-
-        $form = $this->createForm(RegisterType::class, $user);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
-            $usuarioRepository->save($user, true);
-            return $this->redirectToRoute('index');
-        }
-
-        return $this->renderForm('usuario/index.html.twig', [
-            'form' => $form,
-        ]);
-    }*/
-
     #[Route('/profile', name: 'profile')]
     public function profile(Request $request): Response
     {
         $session = $request->getSession();
-        dump($session);
+        dump($session->get('app.user'));
 
         return $this->render('usuario/_profile.html.twig');
     }

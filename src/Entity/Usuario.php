@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -18,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 #[Vich\Uploadable]
-class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
+class Usuario implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -243,5 +244,19 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         $this->profile = $profile;
 
         return $this;
+    }
+
+    public function serialize(): ?string
+    {
+        return serialize([
+            $this->getId(),
+            $this->getUsername(),
+            $this->getPassword()
+        ]);
+    }
+
+    public function unserialize(string $data)
+    {
+        list($this->id, $this->username) = unserialize ($data, ['allowed_classes' => false]);
     }
 }

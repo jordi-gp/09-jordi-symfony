@@ -5,8 +5,13 @@
             <!--Part esquerre, imatge de perfil de l'usuari-->
             <div class="col-10 col-md-5 my-3 mx-auto" id="imatge_perfil">
                 <h4 class="text-center pt-3">Imatge de perfil</h4>
-                <img src="{{ asset('assets/profile/defaultProfile.png') }}"
-                     class="img-fluid mx-auto d-block py-3 rounded-circle" alt="...">
+                {% if app.user.profile %}
+                    <img src="{{ asset('assets/profiles/' ~ app.user.profile) }}"
+                         class="img-fluid mx-auto d-block py-3 rounded-circle" alt="Imatge de Perfil">
+                {% else %}
+                    <img src="{{ asset('assets/profile/defaultProfile.png') }}"
+                         class="img-fluid mx-auto d-block py-3 rounded-circle" alt="Imatge de Perfil">
+                {% endif %}
                 <div class="input-group px-4 py-3">
                     <input type="file" class="form-control" id="inputGroupFile04"
                            aria-describedby="inputGroupFileAddon04" aria-label="Upload">
@@ -19,12 +24,11 @@
                     <h4>Informació Personal</h4>
                     <div class="px-3 bloc_info">
                         <label class="col-sm-2 col-form-label text-primary">Nom</label>
-                        <p>Jordi García</p>
-                        <label class="col-sm-2 col-form-label text-primary">Rol actual</label>
-                        <p>Administrador</p>
+                        <p>{{ app.user.name }}</p>
+                        <label class="col-sm-2 col-form-label text-primary">Nom d'usuari</label>
+                        <p>{{ app.user.username }}</p>
                         <label class="col-sm-2 col-form-label text-primary">Email</label>
-                        <p>jordigarcia932@gmail.com</p>
-                        <p><a href="#" class="link-primary">Notícies publicades</a></p>
+                        <p>{{ app.user.email }}</p>
                         <button type="button" class="btn btn-success">Actualitzar informació</button>
                     </div>
                 </div>
@@ -44,4 +48,5 @@
         </div>
     </div>
     </div>
+    {# {% do redirect('/home') %} #}
 {% endblock %}

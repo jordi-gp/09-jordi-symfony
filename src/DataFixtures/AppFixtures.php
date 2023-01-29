@@ -108,7 +108,7 @@ class AppFixtures extends Fixture
         $vinilo2 = new Vinilo();
         $vinilo2->setName('Depresión Sonora');
         $vinilo2->setCreatedAt(new DateTime());
-        $vinilo2->setArtista($artista);
+        $vinilo2->setArtista($artista2);
         $vinilo2->setDescription("Albúm homònim i segon treball de l'artista");
         $vinilo2->setPrice(20);
         $vinilo2->setRating(4.5);
@@ -121,7 +121,7 @@ class AppFixtures extends Fixture
         $vinilo3 = new Vinilo();
         $vinilo3->setName('Antes que llegue el invierno');
         $vinilo3->setCreatedAt(new DateTime());
-        $vinilo3->setArtista($artista);
+        $vinilo3->setArtista($artista3);
         $vinilo3->setDescription('Segon albúm grabat en estudio per el cantautor');
         $vinilo3->setPrice(20);
         $vinilo3->setRating(3.4);
