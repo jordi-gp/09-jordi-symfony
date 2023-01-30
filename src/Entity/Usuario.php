@@ -261,7 +261,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface, Seri
 
     public function unserialize(string $data)
     {
-        list($this->id, $this->username) = unserialize ($data, ['allowed_classes' => false]);
+        list($this->id, $this->username, $this->password) = unserialize ($data, ['allowed_classes' => false]);
     }
 
     public function getSavedVinils(): ?Vinilo

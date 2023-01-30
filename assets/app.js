@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import 'bootstrap/dist/js/bootstrap';
+import '@popperjs/core/dist/esm/popper';
 
 // start the Stimulus application
 import './bootstrap';
