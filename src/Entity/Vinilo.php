@@ -7,8 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
 #[ORM\Entity(repositoryClass: ViniloRepository::class)]
+#[Vich\Uploadable]
 class Vinilo
 {
     #[ORM\Id]
@@ -24,6 +28,9 @@ class Vinilo
 
     #[ORM\Column(length: 50)]
     private ?string $cover = null;
+
+    #[Vich\UploadableField(mapping: 'covers', fileNameProperty: 'covers')]
+    private ?File $fileCover = null;
 
     #[ORM\Column(length: 250)]
     private ?string $description = null;
@@ -43,6 +50,7 @@ class Vinilo
 
     #[ORM\OneToMany(mappedBy: 'savedVinils', targetEntity: Usuario::class)]
     private Collection $linkingUsers;
+
 
     public function __construct()
     {
@@ -195,6 +203,18 @@ class Vinilo
                 $linkingUser->setSavedVinils(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFileCover(): ?string
+    {
+        return $this->fileCover;
+    }
+
+    public function setFileCover(string $fileCover): self
+    {
+        $this->fileCover = $fileCover;
 
         return $this;
     }

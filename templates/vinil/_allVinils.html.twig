@@ -3,7 +3,31 @@
 {% block title %}Vinils{% endblock %}
 {% block main %}
     <div class="container-fluid pb-4 d-flex col-12">
-        <div class="col-2"></div>
+        <div class="col-2 d-flex justify-content-start align-items-start mt-4 flex-column">
+            <div class="mb-3">
+                <h4>Buscador</h4>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+            <div>
+                <h4>Filtre per Artistes</h4>
+                <!--Filtre per artistes-->
+                <li class="nav-item-dropdown list-unstyled">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Artistes
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for artista in artistas %}
+                            <li>
+                                <a class="dropdown-item">{{ artista.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </div>
+        </div>
         <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: #AAAAAA">
             {% for vinilo in vinilos %}
                 <div class="card mt-4 mb-4" style="width: 18rem;">
