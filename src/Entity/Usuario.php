@@ -83,6 +83,10 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface, Seri
     #[UploadableField(mapping: 'profiles', fileNameProperty: 'profile')]
     private ?File $fileProfile = null;
 
+    #[ORM\ManyToOne(inversedBy: 'linkingUsers')]
+    #[ORM\JoinTable(name:'user_saved_vinil')]
+    private ?Vinilo $savedVinils = null;
+
     /**
      * @return File|null
      */
@@ -258,5 +262,17 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface, Seri
     public function unserialize(string $data)
     {
         list($this->id, $this->username) = unserialize ($data, ['allowed_classes' => false]);
+    }
+
+    public function getSavedVinils(): ?Vinilo
+    {
+        return $this->savedVinils;
+    }
+
+    public function setSavedVinils(?Vinilo $savedVinils): self
+    {
+        $this->savedVinils = $savedVinils;
+
+        return $this;
     }
 }

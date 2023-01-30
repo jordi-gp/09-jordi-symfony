@@ -41,9 +41,13 @@ class Vinilo
     #[ORM\OneToMany(mappedBy: 'vinilo_id', targetEntity: Valoracion::class)]
     private Collection $valoracions;
 
+    #[ORM\OneToMany(mappedBy: 'savedVinils', targetEntity: Usuario::class)]
+    private Collection $linkingUsers;
+
     public function __construct()
     {
         $this->valoracions = new ArrayCollection();
+        $this->linkingUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -159,6 +163,36 @@ class Vinilo
             // set the owning side to null (unless already changed)
             if ($valoracion->getViniloId() === $this) {
                 $valoracion->setViniloId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Usuario>
+     */
+    public function getLinkingUsers(): Collection
+    {
+        return $this->linkingUsers;
+    }
+
+    public function addLinkingUser(Usuario $linkingUser): self
+    {
+        if (!$this->linkingUsers->contains($linkingUser)) {
+            $this->linkingUsers->add($linkingUser);
+            $linkingUser->setSavedVinils($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLinkingUser(Usuario $linkingUser): self
+    {
+        if ($this->linkingUsers->removeElement($linkingUser)) {
+            // set the owning side to null (unless already changed)
+            if ($linkingUser->getSavedVinils() === $this) {
+                $linkingUser->setSavedVinils(null);
             }
         }
 
