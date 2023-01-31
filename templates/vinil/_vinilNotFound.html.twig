@@ -1,12 +1,16 @@
 {% extends 'default.html.twig' %}
-{% block title %}404 - Vinil Not Found{% endblock %}
 {% block main %}
-    <div class="col-8 d-flex justify-content-center">
-        <h1>Vinil no Trobat</h1>
-        <p>Pareix ser que el vinil que busques no es troba registrat</p>
-
-        <p>
-            Ací tens tots els vinils dels que disposem <a href="{{ path('vinil_list') }}" /></p>
-        </p>
+    <div class="container-fluid pb-4 d-flex col-12">
+        <div class="col-2">
+        </div>
+        <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: #AAAAAA">
+            <div class="mt-4">
+                <h4>
+                    {{ message }}
+                </h4>
+            </div>
+            <img src="{{ asset('assets/notFound.png') }}" alt="Artist not Found" />
+        </div>
+        <div class="col-2"></div>
     </div>
 {% endblock %}

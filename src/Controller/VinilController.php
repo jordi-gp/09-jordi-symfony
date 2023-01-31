@@ -47,7 +47,7 @@ class VinilController extends AbstractController
         {
             $message = "No existeix un vinil amb el id introduït";
 
-            return $this->render('vinil/_vinilNotFound.html.twig', [
+            return $this->render('vinil/_vinilNotFound.html.twig.html.twig', [
                 'message' => $message
             ]);
         } else {
@@ -59,15 +59,25 @@ class VinilController extends AbstractController
 
     # Filtre per trobar els vinils d'un artista en concret
     #[Route('/vinils/artista/{name}', name:'vinil_by_artist', methods: 'GET')]
-    public function vinilByArtis(Request $request, ViniloRepository $viniloRepository): Response
+    public function vinilByArtis(string $name, Request $request, ArtistaRepository $artistaRepository, ViniloRepository $viniloRepository): Response
     {
-        #TODO: Preguntar per aquesta part en classe
-        dump($request->query->get('name'));
-        $vinilos = $viniloRepository->findBy(['artista']);
+        $artista = $artistaRepository->findOneBy(['name'=>$name]);
 
-        dump($vinilos);
+        $vinilos = $viniloRepository->findBy(["artista"=>$artista]);
+
+        if(!$vinilos)
+        {
+            $errorMessage = "No existeix cap artista amb les credencials donades";
+
+            return $this->render('vinil/_vinilNotFound.html.twig', [
+                'message' => $errorMessage
+            ]);
+        }
+
         return $this->render('vinil/_vinilByArtist.html.twig', [
-            'vinilos' => $vinilos
+            'vinilos' => $vinilos,
+            'artista' => $artista
+
         ]);
     }
 
