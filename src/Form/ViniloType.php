@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Artista;
 use App\Entity\Vinilo;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -14,6 +16,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ViniloType extends AbstractType
 {
@@ -34,7 +37,7 @@ class ViniloType extends AbstractType
                 ]
             ])
             ->add('price', IntegerType::class)
-            ->add('fileCover', VichFileType::class, [
+            ->add('fileCover', VichImageType::class, [
                 'constraints' => [
                     new File([
                         'maxSize' => '2M',
@@ -46,13 +49,10 @@ class ViniloType extends AbstractType
             ->add('description', TextAreaType::class, [
 
             ])
-            ->add('artista', ChoiceType::class,
+            ->add('artista', EntityType::class,
                 [
-                    'choices' => [
-                        'Cicatriz' => 'Cicatriz',
-                        'Depresión Sonora' => 'Depresión Sonora',
-                        'El Pau' => 'El Pau'
-                    ]
+                    'class' => Artista::class,
+                    'choice_label' => 'name'
                 ])
         ;
     }

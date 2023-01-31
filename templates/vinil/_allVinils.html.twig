@@ -21,7 +21,7 @@
                     <ul class="dropdown-menu">
                         {% for artista in artistas %}
                             <li>
-                                <a class="dropdown-item">{{ artista.name }}</a>
+                                <a class="dropdown-item" href="{{ path('vinil_by_artist', {'name': artista.name}) }}">{{ artista.name }}</a>
                             </li>
                         {% endfor %}
                     </ul>

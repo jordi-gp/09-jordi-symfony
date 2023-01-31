@@ -151,10 +151,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/security-guard" />
       <path value="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle" />
       <path value="$PROJECT_DIR$/vendor/gregwar/captcha-bundle" />
-<<<<<<< HEAD
       <path value="$PROJECT_DIR$/vendor/gregwar/captcha" />
-=======
->>>>>>> 7ab8e51545c9ce6149c20046f444914ff01582b0
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

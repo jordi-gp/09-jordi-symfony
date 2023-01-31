@@ -79,6 +79,15 @@ class AppFixtures extends Fixture
         $manager->persist($artista3);
         $manager->flush();
 
+        $artista4 = new Artista();
+        $artista4->setName('Segismundo Toxicómano');
+        $artista4->setDescription('Grup punk de Gasteiz');
+        $artista4->setPhoto('patrick.jpg');
+        $artista4->setDiscografica($discografica);
+
+        $manager->persist($artista4);
+        $manager->flush();
+
         /*$vinilo = new Vinilo();
         $vinilo->setName('Default Vinil');
         $vinilo->setCreatedAt(new DateTime());

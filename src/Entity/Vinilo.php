@@ -29,7 +29,7 @@ class Vinilo
     #[ORM\Column(length: 50)]
     private ?string $cover = null;
 
-    #[Vich\UploadableField(mapping: 'covers', fileNameProperty: 'covers')]
+    #[Vich\UploadableField(mapping: 'covers', fileNameProperty: 'cover')]
     private ?File $fileCover = null;
 
     #[ORM\Column(length: 250)]
@@ -48,14 +48,9 @@ class Vinilo
     #[ORM\OneToMany(mappedBy: 'vinilo_id', targetEntity: Valoracion::class)]
     private Collection $valoracions;
 
-    #[ORM\OneToMany(mappedBy: 'savedVinils', targetEntity: Usuario::class)]
-    private Collection $linkingUsers;
-
-
     public function __construct()
     {
         $this->valoracions = new ArrayCollection();
-        $this->linkingUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,42 +172,12 @@ class Vinilo
         return $this;
     }
 
-    /**
-     * @return Collection<int, Usuario>
-     */
-    public function getLinkingUsers(): Collection
-    {
-        return $this->linkingUsers;
-    }
-
-    public function addLinkingUser(Usuario $linkingUser): self
-    {
-        if (!$this->linkingUsers->contains($linkingUser)) {
-            $this->linkingUsers->add($linkingUser);
-            $linkingUser->setSavedVinils($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLinkingUser(Usuario $linkingUser): self
-    {
-        if ($this->linkingUsers->removeElement($linkingUser)) {
-            // set the owning side to null (unless already changed)
-            if ($linkingUser->getSavedVinils() === $this) {
-                $linkingUser->setSavedVinils(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getFileCover(): ?string
+    public function getFileCover(): ?File
     {
         return $this->fileCover;
     }
 
-    public function setFileCover(string $fileCover): self
+    public function setFileCover(File $fileCover): self
     {
         $this->fileCover = $fileCover;
 

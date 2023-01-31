@@ -1,3 +1,6 @@
 {% extends 'default.html.twig' %}
 {% block main %}
+    {% for vinilo in vinilos %}
+        {{ vinilo.name }}
+    {% endfor %}
 {% endblock %}

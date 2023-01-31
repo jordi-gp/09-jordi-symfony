@@ -8,6 +8,7 @@ use App\Repository\UsuarioRepository;
 use App\Repository\ViniloRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,18 +23,6 @@ class VinilController extends AbstractController
         return $this->render('vinil/_allVinils.html.twig', [
             'vinilos' => $vinilos,
             'artistas' => $artistas
-        ]);
-    }
-
-    # Filtre per trobar els vinils d'un artista en concret
-    #[Route('/vinils/artista/{name}', name:'vinil_by_artist')]
-    public function vinilByArtis(ViniloRepository $viniloRepository): Response
-    {
-        #TODO: Preguntar per aquesta part en classe
-        $vinilos = $viniloRepository->findBy(['artista_id' => 'ASC']);
-
-        return $this->render('vinil/_vinilByArtist.html.twig', [
-            'vinilos' => $vinilos
         ]);
     }
 
@@ -66,6 +55,20 @@ class VinilController extends AbstractController
                 'vinilo' => $vinilo,
             ]);
         }*/
+    }
+
+    # Filtre per trobar els vinils d'un artista en concret
+    #[Route('/vinils/artista/{name}', name:'vinil_by_artist', methods: 'GET')]
+    public function vinilByArtis(Request $request, ViniloRepository $viniloRepository): Response
+    {
+        #TODO: Preguntar per aquesta part en classe
+        dump($request->query->get('name'));
+        $vinilos = $viniloRepository->findBy(['artista']);
+
+        dump($vinilos);
+        return $this->render('vinil/_vinilByArtist.html.twig', [
+            'vinilos' => $vinilos
+        ]);
     }
 
     #[Route(path:'/vinils/{id}/save', name:'vinil_save')]

@@ -9,14 +9,9 @@
                     <img src="{{ asset('assets/profiles/' ~ app.user.profile) }}"
                          class="img-fluid mx-auto d-block py-3 rounded-circle" alt="Imatge de Perfil">
                 {% else %}
-                    <img src="{{ asset('assets/profile/defaultProfile.png') }}"
+                    <img src="{{ asset('assets/profiles/defaultProfile.png') }}"
                          class="img-fluid mx-auto d-block py-3 rounded-circle" alt="Imatge de Perfil">
                 {% endif %}
-                <div class="input-group px-4 py-3">
-                    <input type="file" class="form-control" id="inputGroupFile04"
-                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                    <button class="btn btn-secondary" type="button" id="inputGroupFileAddon04">Canvia</button>
-                </div>
             </div>
             <!--Part dreta, informació del perfil de l'usuari-->
             <div class="col-10 col-md-6 py-3 my-3 mx-auto" id="segon_bloc">
@@ -29,24 +24,10 @@
                         <p>{{ app.user.username }}</p>
                         <label class="col-sm-2 col-form-label text-primary">Email</label>
                         <p>{{ app.user.email }}</p>
-                        <button type="button" class="btn btn-success">Actualitzar informació</button>
-                    </div>
-                </div>
-                <div class="col-10 col-md-11 mx-auto my-2 py-3 px-3 info">
-                    <h4>Cambia la contrasenya</h4>
-                    <div class="px-3 bloc_info">
-                        <label class="col-sm-3 col-form-label text-primary">Contrasenya Actual</label>
-                        <input type="password" class="form-control" id="exampleFormControlInput1"
-                               placeholder="Contrasenya Actual">
-                        <label class="col-sm-3 col-form-label text-primary">Contrasenya Nova</label>
-                        <input type="password" class="mb-3 form-control" id="exampleFormControlInput2"
-                               placeholder="Contrasenya Nova">
-                        <button type="button" class="btn btn-success">Actualitzar Contrasenya</button>
+                        <button type="button" class="btn btn-success"><a style="text-decoration: none; color:white;" href="{{ path('app_edit_usuario_edit', {'id': app.user.id}) }}">Actualitzar informació</a></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    {# {% do redirect('/home') %} #}
 {% endblock %}
