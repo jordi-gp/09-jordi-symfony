@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Vinilo;
 use App\Repository\ArtistaRepository;
+use App\Repository\UsuarioRepository;
 use App\Repository\ViniloRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,5 +66,14 @@ class VinilController extends AbstractController
                 'vinilo' => $vinilo,
             ]);
         }*/
+    }
+
+    #[Route(path:'/vinils/{id}/save', name:'vinil_save')]
+    #[IsGranted('ROLE_USER')]
+    public function like(Vinilo $vinilo, UsuarioRepository $usuarioRepository)
+    {
+        $user = $this->getUser();
+
+        $user->addSavedVinil($vinilo);
     }
 }

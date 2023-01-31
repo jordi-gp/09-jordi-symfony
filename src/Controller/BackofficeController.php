@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Artista;
 use App\Entity\Usuario;
+use App\Entity\Vinilo;
 use App\Form\UsuarioType;
+use App\Form\ViniloType;
+use App\Repository\ArtistaRepository;
 use App\Repository\UsuarioRepository;
 use App\Repository\ViniloRepository;
 use DateTime;
@@ -33,6 +37,33 @@ class BackofficeController extends AbstractController
         return $this->render('backoffice/_gestio_usuaris.html.twig', [
             'controller_name' => 'BackofficeController',
             'usuaris' => $usuaris
+        ]);
+    }
+
+    #[Route('backoffice/vinils/new', name: 'nuevoVinilo')]
+    public function newVinilo(Request $request, ArtistaRepository $artistaRepository, ViniloRepository $viniloRepository): Response
+    {
+        $vinilo = new Vinilo();
+
+        $artistas[] = $artistaRepository->findAll();
+
+        $form = $this->createForm(ViniloType::class, $vinilo);
+
+        $form->handleRequest($request);
+
+        $vinilo->setCreatedAt(new DateTime());
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $vinilo->setRating(0);
+
+            $viniloRepository->save($vinilo, true);
+
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->renderForm('backoffice/_new_vinil.html.twig', [
+            'form' => $form,
+            'artistas' => $artistas
         ]);
     }
 
