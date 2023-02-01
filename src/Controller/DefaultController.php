@@ -25,7 +25,7 @@ class DefaultController extends AbstractController
     public function index(Request $request, UsuarioRepository $usuarioRepository, ViniloRepository $viniloRepository): Response
     {
         $usuarios = $usuarioRepository->findOneBy([], ['username' => 'ASC']);
-        $vinilos = $viniloRepository->findBy(criteria:[], orderBy:  ['createdAt' => 'ASC'], limit: 3);
+        $vinilos = $viniloRepository->findBy(criteria:[], orderBy:  ['createdAt' => 'DESC'], limit: 3);
 
         return $this->render('home/index.html.twig', [
             'usuario' => $usuarios,

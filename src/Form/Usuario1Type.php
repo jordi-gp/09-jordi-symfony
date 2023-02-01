@@ -4,8 +4,11 @@ namespace App\Form;
 
 use App\Entity\Usuario;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class Usuario1Type extends AbstractType
 {
@@ -14,12 +17,16 @@ class Usuario1Type extends AbstractType
         $builder
             ->add('name')
             ->add('username')
-            ->add('email')
-            ->add('password')
-            ->add('role')
-            ->add('createdAt')
-            ->add('profile')
-            ->add('savedVinils')
+            ->add('email', EmailType::class)
+            ->add('fileProfile', VichFileType::class, [
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'mimeTypes' => ['image/png', 'image/jpeg', 'image/jpg'],
+                        'mimeTypesMessage' => 'El fitxer pujat ha se der una imatge'
+                    ])
+                ]
+            ])
         ;
     }
 

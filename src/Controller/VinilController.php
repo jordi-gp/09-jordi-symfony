@@ -6,6 +6,8 @@ use App\Entity\Vinilo;
 use App\Repository\ArtistaRepository;
 use App\Repository\UsuarioRepository;
 use App\Repository\ViniloRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,14 +17,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class VinilController extends AbstractController
 {
     #[Route('/vinils/list', name: 'vinil_list')]
-    public function listVinils(ViniloRepository $viniloRepository, ArtistaRepository $artistaRepository): Response
+    public function listVinils(EntityManagerInterface $em, Request $request, PaginatorInterface $paginator, ViniloRepository $viniloRepository, ArtistaRepository $artistaRepository): Response
     {
         $vinilos = $viniloRepository->findAll();
         $artistas = $artistaRepository->findAll();
 
+        $dql = "SELECT * FROM vinilo";
+        $query = $em->createQuery($dql);
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1)
+        );
+
         return $this->render('vinil/_allVinils.html.twig', [
             'vinilos' => $vinilos,
-            'artistas' => $artistas
+            'artistas' => $artistas,
+            'pagination' => $pagination
         ]);
     }
 
