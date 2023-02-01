@@ -78,8 +78,8 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            #->add('captcha', CaptchaType::class)
-        ;
+            ->add('captcha', CaptchaType::class)
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

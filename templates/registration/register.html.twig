@@ -18,6 +18,12 @@
             label: 'Imatge de perfil'
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
+        {% block captcha_widget %}
+            {% spaceless %}
+                <img src="{{ captcha_code }}" title="captcha" width="{{ captcha_width }}" height="{{ captcha_height }}" />
+                {{ form_widget(form) }}
+            {% endspaceless %}
+        {% endblock %}
         <input type="submit" class="btn btn-primary" value="Registrar" />
     {{ form_end(registrationForm) }}
     </div>
