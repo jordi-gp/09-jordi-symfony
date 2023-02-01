@@ -65,13 +65,16 @@ class ViniloRepository extends ServiceEntityRepository
 
     public function findAllByQuery(string $query): array
     {
-        $conn = $this->getEntityManager()->getConnection();
+        $qb = $this->createQueryBuilder('vinilo')
+            ->where('vinilo.name LIKE :value')
+            ->setParameter(':value', "%$query%");
 
-        $sql = 'SELECT * FROM vinilo LIKE :query';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['query' => $query]);
+        $query = $qb->getQuery();
+        $vinils = $query->execute();
 
-        return $stmt->fetchAll();
+        dump($vinils);
+
+        return $vinils;
     }
 
 //    /**
