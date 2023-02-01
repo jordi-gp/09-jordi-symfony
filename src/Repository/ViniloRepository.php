@@ -40,6 +40,40 @@ class ViniloRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllPaginated($currentPage = 1):?Paginator
+    {
+        $query = $this->createQueryBuilder('1')
+            ->orderBy('1.createdAt', 'DESC')
+            ->getQuery();
+
+        $paginator = $this->paginate($query, $currentPage);
+
+        return $paginator;
+    }
+
+     # Paginate results.asd
+    public function paginate($dql, $page = 1, $limit = 5):?Paginator
+    {
+        $paginator = new Paginator();
+
+        $paginator->getQuery()
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit);
+
+        return $paginator;
+    }
+
+    public function findAllByQuery(string $query): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT * FROM vinilo LIKE :query';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['query' => $query]);
+
+        return $stmt->fetchAll();
+    }
+
 //    /**
 //     * @return Vinilo[] Returns an array of Vinilo objects
 //     */

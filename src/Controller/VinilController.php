@@ -7,35 +7,44 @@ use App\Repository\ArtistaRepository;
 use App\Repository\UsuarioRepository;
 use App\Repository\ViniloRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class VinilController extends AbstractController
 {
     #[Route('/vinils/list', name: 'vinil_list')]
-    public function listVinils(EntityManagerInterface $em, Request $request, PaginatorInterface $paginator, ViniloRepository $viniloRepository, ArtistaRepository $artistaRepository): Response
+    public function listVinils(ViniloRepository $viniloRepository, ArtistaRepository $artistaRepository, $page = 1): Response
     {
         $vinilos = $viniloRepository->findAll();
         $artistas = $artistaRepository->findAll();
 
-        $dql = "SELECT * FROM vinilo";
-        $query = $em->createQuery($dql);
 
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1)
-        );
+        #$paginator = new Paginator();
+        /*$vinils = $viniloRepository->findAllPaginated();
+
+        $totalVinilsReturned = $vinils->getIterator()->count();
+
+        $totalVinils = $vinils->count();
+
+        $iterator = $vinils->getIterator();
+
+        $limit = 3;
+        $maxPages = ceil($paginator->count() / $limit);
+        $thisPage = $page;*/
 
         return $this->render('vinil/_allVinils.html.twig', [
             'vinilos' => $vinilos,
             'artistas' => $artistas,
-            'pagination' => $pagination
+            /*'vinils' => $vinils,
+            'maxPages' => $maxPages,
+            'thisPage' => $thisPage*/
         ]);
     }
+
 
     #[Route('/vinil/{id}', name: 'concrete_vinil')]
     public function concreteVinil(Vinilo $vinilo): Response

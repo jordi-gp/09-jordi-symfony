@@ -40,33 +40,26 @@
                     </div>
                 </div>
             {% endfor %}
-            {# total items count #}
-            <div class="count">
-                {{ pagination.getTotalItemCount }}
-            </div>
-            <table>
-                <tr>
-                    {# sorting of properties based on query components #}
-                    <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
-                    <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}
-                    </th>
-                    <th{% if pagination.isSorted(['a.date', 'a.time']) %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Release', ['a.date', 'a.time']) }}
-                    </th>
-                </tr>
+            {# {% if maxPages > 1 %} #}
+                <!--<ul class="pagination pagination-sm">
+                    {# `«` arrow  #}
+                    <li {# {{ thisPage == 1 ? 'class="disabled"' }} #}>
+                        <a href="{# {{ path('routeName', {page: thisPage-1 < 1 ? 1 : thisPage-1}) }} #}">«</a>
+                    </li>
 
-                {# table body #}
-                {% for article in pagination %}
-                    <tr {% if loop.index is odd %}class="color"{% endif %}>
-                        <td>{{ article.id }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-            {# display navigation #}
-            <div class="navigation">
-                {{ knp_pagination_render(pagination) }}
-            </div>
+                    {# Render each page number #}
+                    {# {% for i in 1..maxPages %} #}
+                        <li {# {{ thisPage == i ? 'class="active"' }} #}>
+                            <a href="{# {{ path('routeName', {page: i}) }} #}">{# {{ i }}  #}</a>
+                        </li>
+                    {# {% endfor %} #}
+
+                    {# `»` arrow #}
+                    <li {# {{ thisPage == maxPages ? 'class="disabled"' }} #}>
+                        <a href="{# {{ path('routeName', {page: thisPage+1 <= maxPages ? thisPage+1 : thisPage}) }} #}">»</a>
+                    </li>
+                </ul>-->
+            {# {% endif %} #}
         </div>
         <div class="col-2"></div>
     </div>
