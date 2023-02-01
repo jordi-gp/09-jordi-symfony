@@ -37,6 +37,34 @@ class AppFixtures extends Fixture
         $manager->persist($usuario);
         $manager->flush();
 
+        #Usuario 2
+        $usuario2 = new Usuario();
+        $usuario2->setName('Admin');
+        $usuario2->setUsername('admin');
+        $usuario2->setEmail('admin@gmail.com');
+        $plainPassword2 = 'admin';
+        $hashedPassword2 = $this->passwordHasher->hashPassword($usuario2, $plainPassword2);
+        $usuario2->setPassword($hashedPassword2);
+        $usuario2->setRole('ROLE_ADMIN');
+        $usuario2->setCreatedAt(new DateTime());
+
+        $manager->persist($usuario2);
+        $manager->flush();
+
+        #Usuario 3
+        $usuario3 = new Usuario();
+        $usuario3->setName('User');
+        $usuario3->setUsername('user');
+        $usuario3->setEmail('user@gmail.com');
+        $plainPassword3 = 'user';
+        $hashedPassword3 = $this->passwordHasher->hashPassword($usuario3, $plainPassword3);
+        $usuario3->setPassword($hashedPassword3);
+        $usuario3->setRole('ROLE_USER');
+        $usuario3->setCreatedAt(new DateTime());
+
+        $manager->persist($usuario3);
+        $manager->flush();
+
         #Discografica
         $discografica = new Discografica();
         $discografica->setName('Patrick Records');

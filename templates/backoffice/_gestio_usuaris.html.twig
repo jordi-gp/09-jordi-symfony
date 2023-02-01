@@ -16,18 +16,19 @@
                             <th scope="col">Rol</th>
                             <th scope="col">Accions</th>
                         </tr>
-                        {% for usuari in usuaris %}
+                        {% for usuario in usuaris %}
                             <tr>
-                                <td>{{ usuari.id }}</td>
-                                <td>{{ usuari.name }}</td>
-                                <td>{{ usuari.username }}</td>
-                                <td>{{ usuari.email }}</td>
-                                <td>{{ usuari.createdAt|date('Y-m-d') }}</td>
-                                <td>{{ usuari.role }}</td>
+                                <td>{{ usuario.id }}</td>
+                                <td>{{ usuario.name }}</td>
+                                <td>{{ usuario.username }}</td>
+                                <td>{{ usuario.email }}</td>
+                                <td>{{ usuario.createdAt|date('Y-m-d') }}</td>
+                                <td>{{ usuario.role }}</td>
 
                                 <td>
                                     <div class="d-grid gap-2">
-                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                        {{ include('edit_usuario/_delete_form.html.twig') }}
+                                        <!--<button type="button" class="btn btn-danger">Eliminar</button>-->
                                     </div>
                                 </td>
                             </tr>

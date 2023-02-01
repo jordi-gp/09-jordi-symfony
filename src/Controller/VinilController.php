@@ -103,10 +103,44 @@ class VinilController extends AbstractController
 
     #[Route(path:'/vinils/{id}/save', name:'vinil_save')]
     #[IsGranted('ROLE_USER')]
-    public function like(Vinilo $vinilo, UsuarioRepository $usuarioRepository)
+    public function like(Vinilo $vinilo, UsuarioRepository $usuarioRepository): Response
     {
         $user = $this->getUser();
+        if(!$vinilo->getLinkingUsers()->contains($user)) {
+            $user->addSavedVinil($vinilo);
+            $usuarioRepository->save($user, true);
+        }
 
-        $user->addSavedVinil($vinilo);
+        return $this->redirectToRoute('index');
+    }
+
+    #[Route(path: '/usuario/{username}/vinils/saved', name: 'saved_vinils')]
+    #[IsGranted('ROLE_USER')]
+    public function savedVinils(string $username, UsuarioRepository $usuarioRepository, ViniloRepository $viniloRepository): Response
+    {
+        $message = "Vinils guardats de l'usuari $username";
+
+        $user = $usuarioRepository->findOneBy(["username"=>$username]);
+
+        $vinils = $user->getSavedVinils()->getValues();
+
+        dump($vinils);
+        return $this->render('usuario/_saved_vinils.html.twig', [
+            'message' => $message,
+            'vinilos' => $vinils
+        ]);
+    }
+
+    #[Route(path: '/vinils/{id}/remove', name:'vinil_remove')]
+    #[IsGranted('ROLE_USER')]
+    public function remove(Vinilo $vinilo, UsuarioRepository $usuarioRepository): Response
+    {
+        $user = $this->getUser();
+        if($vinilo->getLinkingUsers()->contains($user)) {
+            $user->removeSavedVinil($vinilo);
+            $usuarioRepository->save($user, true);
+        }
+
+        return $this->redirectToRoute('index');
     }
 }

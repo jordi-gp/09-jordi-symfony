@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -84,6 +85,16 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface, Seri
     private ?File $fileProfile = null;
 
     /**
+     * @ORM\Column(type="datetime")
+     * @var DateTime
+     */
+    private $updatedAt;
+
+    #[ORM\ManyToMany(targetEntity: Vinilo::class, inversedBy: 'linkingUsers')]
+    #[ORM\JoinTable(name:'user_save_vinil')]
+    private Collection $savedVinils;
+
+    /**
      * @return File|null
      */
     public function getFileProfile(): ?File
@@ -97,12 +108,17 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface, Seri
     public function setFileProfile(?File $fileProfile): void
     {
         $this->fileProfile = $fileProfile;
+
+        if($fileProfile){
+            $this->updatedAt = new DateTime('now');
+        }
     }
 
     public function __construct()
     {
         $this->valoracions = new ArrayCollection();
         $this->role = "ROLE_USER";
+        $this->savedVinils = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -258,5 +274,29 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface, Seri
     public function unserialize(string $data)
     {
         list($this->id, $this->username, $this->password) = unserialize ($data, ['allowed_classes' => false]);
+    }
+
+    /**
+     * @return Collection<int, Vinilo>
+     */
+    public function getSavedVinils(): Collection
+    {
+        return $this->savedVinils;
+    }
+
+    public function addSavedVinil(Vinilo $savedVinil): self
+    {
+        if (!$this->savedVinils->contains($savedVinil)) {
+            $this->savedVinils->add($savedVinil);
+        }
+
+        return $this;
+    }
+
+    public function removeSavedVinil(Vinilo $savedVinil): self
+    {
+        $this->savedVinils->removeElement($savedVinil);
+
+        return $this;
     }
 }

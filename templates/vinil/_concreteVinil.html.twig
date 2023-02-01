@@ -25,9 +25,14 @@
                     <p>{{ vinilo.price }}</p>
                 <h5>Valoració</h5>
                     <p>{{ vinilo.rating }}</p>
-                {% if app.user %}
+                {% if app.user not in vinilo.linkingUsers %}
                     <button type="button" class="btn btn-warning">
-                        <a href="#">Afegir a favorits</a>
+                        <a href="{{ path('vinil_save', { id: vinilo.id }) }}">Afegir a favorits</a>
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-info">Aquest vinil ja el tens guardat!</button>
+                    <button type="button" class="btn btn-warning">
+                        <a href="{{ path('vinil_remove', { id: vinilo.id }) }}">Eliminar vinil</a>
                     </button>
                 {% endif %}
             </div>

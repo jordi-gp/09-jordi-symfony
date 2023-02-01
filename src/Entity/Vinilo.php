@@ -48,9 +48,13 @@ class Vinilo
     #[ORM\OneToMany(mappedBy: 'vinilo_id', targetEntity: Valoracion::class)]
     private Collection $valoracions;
 
+    #[ORM\ManyToMany(targetEntity: Usuario::class, mappedBy: 'savedVinils')]
+    private Collection $linkingUsers;
+
     public function __construct()
     {
         $this->valoracions = new ArrayCollection();
+        $this->linkingUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,6 +184,33 @@ class Vinilo
     public function setFileCover(File $fileCover): self
     {
         $this->fileCover = $fileCover;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Usuario>
+     */
+    public function getLinkingUsers(): Collection
+    {
+        return $this->linkingUsers;
+    }
+
+    public function addLinkingUser(Usuario $linkingUser): self
+    {
+        if (!$this->linkingUsers->contains($linkingUser)) {
+            $this->linkingUsers->add($linkingUser);
+            $linkingUser->addSavedVinil($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLinkingUser(Usuario $linkingUser): self
+    {
+        if ($this->linkingUsers->removeElement($linkingUser)) {
+            $linkingUser->removeSavedVinil($this);
+        }
 
         return $this;
     }

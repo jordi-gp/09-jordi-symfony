@@ -73,6 +73,6 @@ class EditUsuarioController extends AbstractController
             $usuarioRepository->remove($usuario, true);
         }
 
-        return $this->redirectToRoute('app_edit_usuario_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
     }
 }
