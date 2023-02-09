@@ -21,7 +21,7 @@ class DefaultController extends AbstractController
     # Per a comprovar el nom dels contenidors de docker gastar comandament:
     # 'sudo docker ps'
 
-    #[Route('/home', name: 'index')]
+    #[Route('/', name: 'index')]
     public function index(Request $request, UsuarioRepository $usuarioRepository, ViniloRepository $viniloRepository): Response
     {
         $usuarios = $usuarioRepository->findOneBy([], ['username' => 'ASC']);
