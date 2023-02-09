@@ -72,7 +72,7 @@ class ViniloRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         $vinils = $query->execute();
 
-        dump($vinils);
+        #dump($vinils);
 
         return $vinils;
     }

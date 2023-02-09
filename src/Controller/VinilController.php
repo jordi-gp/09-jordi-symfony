@@ -124,7 +124,7 @@ class VinilController extends AbstractController
 
         $vinils = $user->getSavedVinils()->getValues();
 
-        dump($vinils);
+        #dump($vinils);
         return $this->render('usuario/_saved_vinils.html.twig', [
             'message' => $message,
             'vinilos' => $vinils

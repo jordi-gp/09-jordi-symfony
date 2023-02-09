@@ -18,7 +18,7 @@ class UsuarioController extends AbstractController
     public function profile(Request $request): Response
     {
         $session = $request->getSession();
-        dump($session->get('app.user'));
+        #dump($session->get('app.user'));
 
         return $this->render('usuario/_profile.html.twig');
     }

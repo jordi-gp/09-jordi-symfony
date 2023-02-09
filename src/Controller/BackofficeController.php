@@ -115,7 +115,7 @@ class BackofficeController extends AbstractController
     {
         $vinilos = $viniloRepository->findAll();
 
-        dump($vinilos);
+        #dump($vinilos);
 
         return $this->render('backoffice/_gestio_vinils.html.twig', [
             'controller_name' => 'BackOfficeController',
