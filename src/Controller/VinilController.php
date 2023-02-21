@@ -7,6 +7,7 @@ use App\Repository\ArtistaRepository;
 use App\Repository\UsuarioRepository;
 use App\Repository\ViniloRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,31 +18,22 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class VinilController extends AbstractController
 {
     #[Route('/vinils/list', name: 'vinil_list')]
-    public function listVinils(ViniloRepository $viniloRepository, ArtistaRepository $artistaRepository, $page = 1): Response
+    public function listVinils(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request, ViniloRepository $viniloRepository, ArtistaRepository $artistaRepository): Response
     {
-        $vinilos = $viniloRepository->findAll();
         $artistas = $artistaRepository->findAll();
 
+        $dql = 'SELECT * FROM vinilo';
+        $query = $em->createQuery($dql);
 
-        #$paginator = new Paginator();
-        /*$vinils = $viniloRepository->findAllPaginated();
-
-        $totalVinilsReturned = $vinils->getIterator()->count();
-
-        $totalVinils = $vinils->count();
-
-        $iterator = $vinils->getIterator();
-
-        $limit = 3;
-        $maxPages = ceil($paginator->count() / $limit);
-        $thisPage = $page;*/
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), #Nombre de la pàgina
+            2 #Llímit d'elements per pàgina,
+        );
 
         return $this->render('vinil/_allVinils.html.twig', [
-            'vinilos' => $vinilos,
+            'vinilos' => $pagination,
             'artistas' => $artistas,
-            /*'vinils' => $vinils,
-            'maxPages' => $maxPages,
-            'thisPage' => $thisPage*/
         ]);
     }
 

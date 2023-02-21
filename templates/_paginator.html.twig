@@ -1,0 +1,29 @@
+# total items count #}
+<div class="count">
+    {{ pagination.getTotalItemCount }}
+</div>
+<table>
+    <tr>
+        {# sorting of properties based on query components #}
+        <th>{{ knp_pagination_sortable(pagination, 'Id', 'vinilo.id') }}</th>
+        <th{% if pagination.isSorted('vinilo.name') %} class="sorted"{% endif %}>
+            {{ knp_pagination_sortable(pagination, 'Title', 'vinilo.name') }}
+        </th>
+        <th{% if pagination.isSorted(['vinilo.createdAt', 'a.time']) %} class="sorted"{% endif %}>
+            {{ knp_pagination_sortable(pagination, 'Release', ['a.date', 'a.time']) }}
+        </th>
+    </tr>
+
+    {# table body #}
+    {% for vinilo in pagination %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <td>{{ vinilo.id }}</td>
+            <td>{{ vinilo. }}</td>
+            <td>{{ vinilo.date | date('Y-m-d') }}, {{ article.time | date('H:i:s') }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
