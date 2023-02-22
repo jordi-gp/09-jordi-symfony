@@ -34,7 +34,7 @@ class VinilController extends AbstractController
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1), #Nombre de la pàgina
-            1 #Llímit d'elements per pàgina,
+            4 #Llímit d'elements per pàgina,
         );
 
         return $this->render('vinil/_allVinils.html.twig', [

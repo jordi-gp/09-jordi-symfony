@@ -1,28 +1,3 @@
-# total items count #}
-<div class="count">
-    {{ vinilos.getTotalItemCount }}
-</div>
-<table>
-    <tr>
-        {# sorting of properties based on query components #}
-        <th>{{ knp_pagination_sortable(vinilos, 'Id', 'vinilo.id') }}</th>
-        <th{% if vinilos.isSorted('vinilo.name') %} class="sorted"{% endif %}>
-            {{ knp_pagination_sortable(vinilos, 'Title', 'vinilo.name') }}
-        </th>
-        <th{% if vinilos.isSorted(['vinilo.createdAt']) %} class="sorted"{% endif %}>
-            {{ knp_pagination_sortable(vinilos, 'Release', ['vinilo.createdAt']) }}
-        </th>
-    </tr>
-
-    {# table body #}
-    {% for vinilo in vinilos %}
-        <tr {% if loop.index is odd %}class="color"{% endif %}>
-            <td>{{ vinilo.id }}</td>
-            <td>{{ vinilo.name }}</td>
-            <td>{{ vinilo.createdAt | date('Y-m-d') }}</td>
-        </tr>
-    {% endfor %}
-</table>
 {# display navigation #}
 <div class="navigation">
     {{ knp_pagination_render(vinilos) }}
