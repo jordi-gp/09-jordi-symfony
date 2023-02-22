@@ -21,7 +21,7 @@
                     <ul class="dropdown-menu">
                         {% for artista in artistas %}
                             <li>
-                                <a class="dropdown-item" href="{{ path('vinil_by_artist', {'name': artista.name}) }}">{{ artista.name }}</a>
+                                <a class="dropdown-item" href="{{ path('vinil_list', {'artista': artista.name}) }}">{{ artista.name }}</a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
             {% endfor %}
-            {% extends '_paginator.html.twig' %}
+            {% include '_paginator.html.twig' %}
         </div>
         <div class="col-2"></div>
     </div>

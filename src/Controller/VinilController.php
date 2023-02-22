@@ -22,13 +22,19 @@ class VinilController extends AbstractController
     {
         $artistas = $artistaRepository->findAll();
 
-        $dql = 'SELECT * FROM vinilo';
-        $query = $em->createQuery($dql);
+        //$dql = 'SELECT v FROM App\Entity\Vinilo v';
+        $query = $viniloRepository->getFindAllQuery();
+
+        $artistName = $request->query->get('artista');
+        if ($artistName) {
+            $artista = $artistaRepository->findOneBy(["name" => $artistName]);
+            $query = $viniloRepository->getFindByArtistQuery($artista);
+        }
 
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1), #Nombre de la pàgina
-            2 #Llímit d'elements per pàgina,
+            1 #Llímit d'elements per pàgina,
         );
 
         return $this->render('vinil/_allVinils.html.twig', [

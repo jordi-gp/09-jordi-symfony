@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Artista;
 use App\Entity\Vinilo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -101,4 +103,18 @@ class ViniloRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function getFindAllQuery(): Query
+    {
+        return $this->createQueryBuilder('v')
+            ->getQuery();
+    }
+
+    public function getFindByArtistQuery(Artista $artista): Query
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.artista = :artista')
+            ->setParameter('artista', $artista)
+            ->getQuery();
+    }
+
 }
