@@ -20,13 +20,15 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+        $this->addFlash('notice', 'Benvingut de nou!');
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     #[Route(path: '/logout', name: 'logout')]
-    public function logout(): void
+    public function logout(): Response
     {
+        $this->addFlash('warning', "S'ha tancat sessió");
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

@@ -1,6 +1,13 @@
 {% extends 'default.html.twig' %}
 {% block main %}
     <div class="container-fluid">
+        {% for flash_message in app.session.flashbag.get('notice') %}
+            <div class="row">
+                <div class="d-flex justify-content-center alert alert-success" role="alert">
+                    {{ flash_message }}
+                </div>
+            </div>
+        {% endfor %}
         <div class="row">
             <!--Part esquerre, imatge de perfil de l'usuari-->
             <div class="col-10 col-md-5 my-3 mx-auto" id="imatge_perfil">
@@ -24,7 +31,7 @@
                         <p>{{ app.user.username }}</p>
                         <label class="col-sm-2 col-form-label text-primary">Email</label>
                         <p>{{ app.user.email }}</p>
-                        <button type="button" class="btn btn-success"><a style="text-decoration: none; color:white;" href="{{ path('app_edit_usuario_edit', {'id': app.user.id}) }}">Actualitzar informació</a></button>
+                        <button type="button" class="btn btn-success"><a style="text-decoration: none; color:white;" href="{{ path('app_edit_usuario_edit', {'id': app.user.id}) }}">Actualitzar Contrasenya</a></button>
                     </div>
                 </div>
             </div>

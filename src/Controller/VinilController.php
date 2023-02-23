@@ -139,6 +139,8 @@ class VinilController extends AbstractController
             $usuarioRepository->save($user, true);
         }
 
+        $this->addFlash('notice', 'Vinil guardat de forma correcta');
+
         return $this->redirectToRoute('index');
     }
 
@@ -168,6 +170,8 @@ class VinilController extends AbstractController
             $user->removeSavedVinil($vinilo);
             $usuarioRepository->save($user, true);
         }
+
+        $this->addFlash('warning', 'Vinil eliminat de la col·lecció');
 
         return $this->redirectToRoute('index');
     }

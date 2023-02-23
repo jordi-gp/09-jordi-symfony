@@ -1,5 +1,19 @@
 {% extends 'default.html.twig' %}
 {% block main %}
+    {% for flash_message in app.session.flashbag.get('notice') %}
+        <div class="row">
+            <div class="d-flex justify-content-center alert alert-success" role="alert">
+                {{ flash_message }}
+            </div>
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashbag.get('warning') %}
+        <div class="row">
+            <div class="d-flex justify-content-center alert alert-warning" role="alert">
+                {{ flash_message }}
+            </div>
+        </div>
+    {% endfor %}
     <div class="container-fluid pb-4 mt-4 d-flex col-12 flex-row justify-content-center">
         <h2>Últimes Novetats</h2>
     </div>

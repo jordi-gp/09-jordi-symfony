@@ -30,9 +30,8 @@
                         <a href="{{ path('vinil_save', { id: vinilo.id }) }}">Afegir a favorits</a>
                     </button>
                 {% else %}
-                    <button type="button" class="btn btn-info">Aquest vinil ja el tens guardat!</button>
                     <button type="button" class="btn btn-warning">
-                        <a href="{{ path('vinil_remove', { id: vinilo.id }) }}">Eliminar vinil</a>
+                        <a href="{{ path('vinil_remove', { id: vinilo.id }) }}">Eliminar de la col·lecció</a>
                     </button>
                 {% endif %}
             </div>

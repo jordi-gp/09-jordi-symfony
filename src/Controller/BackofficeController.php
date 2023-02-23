@@ -30,13 +30,16 @@ class BackofficeController extends AbstractController
     }
 
     #[Route('/backoffice/users', name: 'gestioUsuaris')]
-    public function gestioUsuaris(UsuarioRepository $usuarioRepository): Response
+    public function gestioUsuaris(Usuario $user, UsuarioRepository $usuarioRepository): Response
     {
         $usuaris = $usuarioRepository->findAll();
+        $roles = $user->getRoles();
+
+        dump($roles);
 
         return $this->render('backoffice/_gestio_usuaris.html.twig', [
             'controller_name' => 'BackofficeController',
-            'usuaris' => $usuaris
+            'usuaris' => $usuaris,
         ]);
     }
 
