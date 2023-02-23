@@ -6,9 +6,21 @@
         <div class="col-2 d-flex justify-content-start align-items-start mt-4 flex-column">
             <div class="mb-3">
                 <h4>Buscador</h4>
-                <form class="d-flex" role="search" method="get">
-                    <input class="form-control me-2" type="search" name="busqueda" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-success" type="submit">Search</button>
+                <form class="d-flex flex-wrap" role="search" method="get">
+                    <input class="form-control me-2 mb-2" type="search" name="busqueda" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">
+                        Search
+                    </button>
+                </form>
+            </div>
+            <div class="mb-3">
+                <h4>Filtre per Data</h4>
+                <form class="d-flex flex-wrap" role="search" method="get">
+                    <input class="form-control me-2 mb-2" type="date" name="dataInici" aria-label="Desde">
+                    <input class="form-control me-2 mb-2" type="date" name="dataFi" aria-label="Hasta">
+                    <button class="btn btn-success" type="submit">
+                        Search
+                    </button>
                 </form>
             </div>
             <div>
@@ -28,19 +40,34 @@
                 </li>
             </div>
         </div>
-        <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: #AAAAAA">
-            {% for vinilo in vinilos %}
-                <div class="card mt-4 mb-4" style="width: 18rem;">
-                    <img src="{{ asset( 'assets/covers/' ~ vinilo.cover ) }}" class="card-img-top" alt="Portada Vinil">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ vinilo.name }}</h5>
-                        <p>Valoració {{ vinilo.rating }}</p>
-                        <p class="card-text">{{ vinilo.description }}</p>
-                        <a href="{{ path('concrete_vinil', {'id': vinilo.id}) }}" class="btn btn-primary">Més informació</a>
-                    </div>
+        <div class="col-8 d-flex flex-column mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: #AAAAAA">
+            {% if vinilos is empty %}
+                <div class="d-flex justify-content-center">
+                    <h3>No s'han trobat resultats</h3>
                 </div>
-            {% endfor %}
-            {% include '_paginator.html.twig' %}
+            {% else %}
+            <div class="d-flex justify-content-center mt-4">
+                <h3>
+                    {{ message }}
+                </h3>
+            </div>
+            <div class="d-flex flex-row flex-wrap justify-content-around">
+                {% for vinilo in vinilos %}
+                    <div class="card mb-4" style="width: 18rem;">
+                        <img src="{{ asset( 'assets/covers/' ~ vinilo.cover ) }}" class="card-img-top" alt="Portada Vinil">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ vinilo.name }}</h5>
+                            <p>Valoració {{ vinilo.rating }}</p>
+                            <p class="card-text">{{ vinilo.description }}</p>
+                            <a href="{{ path('concrete_vinil', {'id': vinilo.id}) }}" class="btn btn-primary">Més informació</a>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-center">
+                {% include '_paginator.html.twig' %}
+            </div>
         </div>
         <div class="col-2"></div>
     </div>

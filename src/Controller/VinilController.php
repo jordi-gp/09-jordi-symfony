@@ -20,17 +20,46 @@ class VinilController extends AbstractController
     #[Route('/vinils/list', name: 'vinil_list')]
     public function listVinils(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request, ViniloRepository $viniloRepository, ArtistaRepository $artistaRepository): Response
     {
+        #Missatge d'aplicació de filtres
+        $message = "";
+
+        #Filtre per artista
         $artistas = $artistaRepository->findAll();
 
-        //$dql = 'SELECT v FROM App\Entity\Vinilo v';
         $query = $viniloRepository->getFindAllQuery();
 
         $artistName = $request->query->get('artista');
         if ($artistName) {
             $artista = $artistaRepository->findOneBy(["name" => $artistName]);
-            $query = $viniloRepository->getFindByArtistQuery($artista);
+
+            if($artista) {
+                $query = $viniloRepository->getFindByArtistQuery($artista);
+                $message = "Vinils de l'artista ".$artista->getName();
+            }
+
+        }
+        $this->createNotFoundException('Vinil not Found');
+
+        #Filtre per formulari de búsqueda
+        $formQuery = $request->query->get('busqueda');
+
+        if($formQuery) {
+            $query = $viniloRepository->getFindByVinilNameQuery($formQuery);
+            $message = "Vinils amb nom '". $formQuery."'";
         }
 
+        #Filtre entre dos rangs
+        $dataInici = $request->query->get('dataInici');
+        $dataFi = $request->query->get('dataFi');
+
+        if(!$dataInici || !$dataFi)
+            $this->createNotFoundException();
+        else {
+            $query = $viniloRepository->getFindByCreationDate($dataInici, $dataFi);
+            $message = "Vinils creats entre ". $dataInici ." y ". $dataFi .".";
+        }
+
+        #Paginació
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1), #Nombre de la pàgina
@@ -40,6 +69,7 @@ class VinilController extends AbstractController
         return $this->render('vinil/_allVinils.html.twig', [
             'vinilos' => $pagination,
             'artistas' => $artistas,
+            'message' => $message
         ]);
     }
 

@@ -5,7 +5,9 @@ namespace App\Repository;
 use App\Entity\Artista;
 use App\Entity\Vinilo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -117,4 +119,22 @@ class ViniloRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+    public function getFindByVinilNameQuery(string $text): Query
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.name LIKE :name')
+            ->setParameter('name', '%'.$text.'%')
+            ->getQuery();
+    }
+
+    public function getFindByCreationDate(string $dataInici, string $dataFi): Query
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.createdAt BETWEEN :dataInici AND :dataFi')
+            ->setParameters(new ArrayCollection(array(
+                new Parameter('dataInici', $dataInici),
+                new Parameter('dataFi', $dataFi)
+            )))
+            ->getQuery();
+    }
 }
