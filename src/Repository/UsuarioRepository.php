@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Usuario;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,20 @@ class UsuarioRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getFindAllQuery(): Query
+    {
+        return $this->createQueryBuilder('u')
+            ->getQuery();
+    }
+
+    public function getFindByUserRole(string $role): Query
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.role = :role')
+            ->setParameter('role', $role)
+            ->getQuery();
     }
 
 //    /**

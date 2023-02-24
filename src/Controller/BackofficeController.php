@@ -11,6 +11,7 @@ use App\Repository\ArtistaRepository;
 use App\Repository\UsuarioRepository;
 use App\Repository\ViniloRepository;
 use DateTime;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,16 +31,45 @@ class BackofficeController extends AbstractController
     }
 
     #[Route('/backoffice/users', name: 'gestioUsuaris')]
-    public function gestioUsuaris(Usuario $user, UsuarioRepository $usuarioRepository): Response
+    public function gestioUsuaris(PaginatorInterface $paginator, Request $request, UsuarioRepository $usuarioRepository): Response
     {
+        $message = "";
         $usuaris = $usuarioRepository->findAll();
-        $roles = $user->getRoles();
 
-        dump($roles);
+        #Llistat dels rols d'usuari
+        $roles = [];
+
+        foreach($usuaris as $usuari)
+        {
+            $roles[] = $usuari->getRole();
+        }
+
+        $userRoles = array_unique($roles);
+
+        #Filtre per rol
+        $query = $usuarioRepository->getFindAllQuery();
+        $userRole = $request->query->get('role');
+
+        if($userRole) {
+            $user = $usuarioRepository->findOneBy(['role' => $userRole]);
+
+            if($user) {
+                $query = $usuarioRepository->getFindByUserRole($userRole);
+                $message = "Usuaris amb rol ". $userRole;
+            }
+        }
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), #Nombre de la pàgina
+            2 #Llímit d'elements per pàgina,
+        );
 
         return $this->render('backoffice/_gestio_usuaris.html.twig', [
             'controller_name' => 'BackofficeController',
-            'usuaris' => $usuaris,
+            'usuaris' => $pagination,
+            'roles' => $userRoles,
+            'message' => $message
         ]);
     }
 
@@ -124,5 +154,26 @@ class BackofficeController extends AbstractController
             'controller_name' => 'BackOfficeController',
             'vinilos' => $vinilos
         ]);
+    }
+
+    #[Route('/backoffice/user/delete', name: 'deleteUser')]
+    public function deleteUser(UsuarioRepository $usuarioRepository, Request $request): Response
+    {
+        #Comprovació de que l'usuari no te vinils guardats
+        $idUsuario = $request->get('user');
+        $usuario = $usuarioRepository->findOneBy(['id' => $idUsuario]);
+        $vinilsGuardats = $usuario->getSavedVinils()->getValues();
+
+
+        if(!empty($vinilsGuardats)) {
+            $this->addFlash('advice', "No es pot esborrar un usuario amb vinils guardats");
+            return $this->redirectToRoute('index');
+        } else {
+            $this->addFlash('notice', "L'usuari ha sigut eliminat de forma correcta");
+            return $this->render('edit_usuario/_delete_form.html.twig', [
+                    'usuario' => $usuario
+                ]
+            );
+        }
     }
 }

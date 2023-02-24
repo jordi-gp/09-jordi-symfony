@@ -36,7 +36,6 @@ class VinilController extends AbstractController
                 $query = $viniloRepository->getFindByArtistQuery($artista);
                 $message = "Vinils de l'artista ".$artista->getName();
             }
-
         }
         $this->createNotFoundException('Vinil not Found');
 
