@@ -13,6 +13,7 @@ use App\Repository\ViniloRepository;
 use DateTime;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -133,13 +134,31 @@ class BackofficeController extends AbstractController
         ]);
     }
 
-    #[Route('/backoffice/users/edit/id={id}', name: 'editUsers')]
-    public function editaUsuari(UsuarioRepository $usuarioRepository, Usuario $usuario)
+    #[Route('/backoffice/users/edit/id={id}', name: 'editUser')]
+    public function editaUsuari(Request $request, UsuarioRepository $usuarioRepository, Usuario $usuario)
     {
         $user = $usuarioRepository->findOneBy(['id'=> $usuario]);
 
-        return $this->render('backoffice/_edit_usuari.html.twig', [
-            'usuario' => $user
+        $form = $this->createFormBuilder($usuario)
+            ->add('role', ChoiceType::class, [
+                'choices' => [
+                    'ROLE_ADMIN' => 'ROLE_ADMIN',
+                    'ROLE_USER' => 'ROLE_USER'
+                ]
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $usuarioRepository->save($usuario, true);
+            $this->addFlash('notice', "Rol d'usuari actualitzat de forma correcta");
+
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->renderForm('backoffice/_edit_usuari.html.twig', [
+            'usuario' => $user,
+            'form' => $form
         ]);
     }
 

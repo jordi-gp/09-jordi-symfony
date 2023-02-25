@@ -21,12 +21,12 @@
             </li>
         </div>
             <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: lightblue">
-                <div class="d-flex justify-content-center mt-4">
-                    <h3>
-                        {{ message }}
-                    </h3>
-                </div>
                 <div class="col-8 mb-2">
+                    <div class="d-flex justify-content-center mt-4">
+                        <h3>
+                            {{ message }}
+                        </h3>
+                    </div>
                     <h2>Llistat d'usuaris</h2>
                     <table class="table table-bordered text-center" style="border-color: black; background: white">
                         <tr>
@@ -46,7 +46,13 @@
                                 <td>{{ usuario.email }}</td>
                                 <td>{{ usuario.createdAt|date('Y-m-d') }}</td>
                                 <td>{{ usuario.role }}</td>
-
+                                <td>
+                                    <div class="d-grip gap-2">
+                                        <button type="button" class="btn btn-primary">
+                                            <a style="text-decoration: none; color: white;" href="{{ path('editUser', {'id': usuario.id}) }}">Editar</a>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <div class="d-grid gap-2">
                                         <button type="button" class="btn btn-danger">
