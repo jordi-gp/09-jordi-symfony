@@ -39,13 +39,20 @@
                             <th scope="col">Accions</th>
                         </tr>
                         {% for usuario in usuaris %}
-                            <tr>
+                        <tr>
                                 <td>{{ usuario.id }}</td>
                                 <td>{{ usuario.name }}</td>
                                 <td>{{ usuario.username }}</td>
                                 <td>{{ usuario.email }}</td>
                                 <td>{{ usuario.createdAt|date('Y-m-d') }}</td>
                                 <td>{{ usuario.role }}</td>
+                                <td>
+                                    <div class="d-grid gap-2">
+                                        <button type="button" class="btn btn-success">
+                                            <a style="text-decoration: none; color: white;" href="{{ path('saved_vinils_backoffice', {'username': usuario.username}) }}">Vinils guardats</a>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <div class="d-grip gap-2">
                                         <button type="button" class="btn btn-primary">

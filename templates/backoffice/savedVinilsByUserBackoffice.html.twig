@@ -1,0 +1,35 @@
+{% extends 'backoffice.html.twig' %}
+{% block title %}Backoffice - Gestió d'usuaris{% endblock %}
+{% block main %}
+    <div class="col-12 d-flex flex-row">
+        <div class="col-3"></div>
+        <div class="col-6 d-flex flex-wrap flex-column">
+            <h2>{{ message }}</h2>
+            {% if vinilos %}
+            <table class="table table-bordered text-center" style="border-color: black; background: white">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Artista</th>
+                    <th scope="col">Preu</th>
+                    <th scope="col">Valoració</th>
+                    <th scope="col">Data de creació</th>
+                </tr>
+                {% for vinilo in vinilos %}
+                    <tr>
+                        <td>{{ vinilo.id }}</td>
+                        <td>{{ vinilo.name }}</td>
+                        <td>{{ vinilo.artista.name }}</td>
+                        <td>{{ vinilo.price }}</td>
+                        <td>{{ vinilo.rating }}</td>
+                        <td>{{ vinilo.createdAt|date('Y-m-d') }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <h4>Aquest usuari no te vinils guardats encara</h4>
+            {% endif %}
+        </div>
+        <div class="col-3"></div>
+    </div>
+{% endblock %}

@@ -12,6 +12,7 @@ use App\Repository\UsuarioRepository;
 use App\Repository\ViniloRepository;
 use DateTime;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
@@ -194,5 +195,22 @@ class BackofficeController extends AbstractController
                 ]
             );
         }
+    }
+
+    #[Route(path: '/backoffice/{username}/vinils/saved', name: 'saved_vinils_backoffice')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function savedVinils(string $username, UsuarioRepository $usuarioRepository): Response
+    {
+        $message = "Vinils guardats de l'usuari $username";
+
+        $user = $usuarioRepository->findOneBy(["username"=>$username]);
+
+        $vinils = $user->getSavedVinils()->getValues();
+
+        dump($vinils);
+        return $this->render('/backoffice/savedVinilsByUserBackoffice.html.twig', [
+            'message' => $message,
+            'vinilos' => $vinils
+        ]);
     }
 }
