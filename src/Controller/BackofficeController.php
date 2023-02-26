@@ -15,6 +15,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -32,11 +34,33 @@ class BackofficeController extends AbstractController
         ]);
     }
 
+    #[Route('/backoffice/vinils/edit/id={id}', name: 'editVinil')]
+    public function editaVinilo(Request $request, ViniloRepository $viniloRepository, Vinilo $vinilo)
+    {
+        $vinil = $viniloRepository->findOneBy(['id'=> $vinilo]);
+
+        $form = $this->createForm(ViniloTYpe::class, $vinilo);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $viniloRepository->save($vinilo, true);
+            $this->addFlash('notice', "Rol d'usuari actualitzat de forma correcta");
+
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->renderForm('backoffice/_edit_vinil.html.twig', [
+            'vinilo' => $vinilo,
+            'form' => $form
+        ]);
+    }
+
     #[Route('/backoffice/users', name: 'gestioUsuaris')]
     public function gestioUsuaris(PaginatorInterface $paginator, Request $request, UsuarioRepository $usuarioRepository): Response
     {
         $message = "";
         $usuaris = $usuarioRepository->findAll();
+        $query = $usuarioRepository->getFindAllQuery();
 
         #Llistat dels rols d'usuari
         $roles = [];
@@ -48,8 +72,15 @@ class BackofficeController extends AbstractController
 
         $userRoles = array_unique($roles);
 
+        #Filtre per formulari de búsqueda
+        $formQuery = $request->query->get('busqueda');
+
+        if($formQuery) {
+            $query = $usuarioRepository->getFindByUsernameQuery($formQuery);
+            $message = "Usuaris amb nom '". $formQuery."'";
+        }
+
         #Filtre per rol
-        $query = $usuarioRepository->getFindAllQuery();
         $userRole = $request->query->get('role');
 
         if($userRole) {
@@ -82,7 +113,7 @@ class BackofficeController extends AbstractController
 
         $artistas[] = $artistaRepository->findAll();
 
-        $form = $this->createForm(ViniloType::class, $vinilo);
+        $form = $this->createFormBuilder(ViniloType::class, $vinilo);
 
         $form->handleRequest($request);
 
@@ -164,15 +195,49 @@ class BackofficeController extends AbstractController
     }
 
     #[Route('/backoffice/vinils', name: 'gestioVinils')]
-    public function gestioVinils(ViniloRepository $viniloRepository): Response
+    public function gestioVinils(PaginatorInterface $paginator, Request $request, ArtistaRepository $artistaRepository, ViniloRepository $viniloRepository): Response
     {
         $vinilos = $viniloRepository->findAll();
 
-        #dump($vinilos);
+        #Filtres
+        $message = "";
+
+        #Filtre per artista
+        $artistas = $artistaRepository->findAll();
+
+        $query = $viniloRepository->getFindAllQuery();
+
+        $artistName = $request->query->get('artista');
+        if ($artistName) {
+            $artista = $artistaRepository->findOneBy(["name" => $artistName]);
+
+            if($artista) {
+                $query = $viniloRepository->getFindByArtistQuery($artista);
+                $message = "Vinils de l'artista ".$artista->getName();
+            }
+        }
+        $this->createNotFoundException('Vinil not Found');
+
+        #Filtre per formulari de búsqueda
+        $formQuery = $request->query->get('busqueda');
+
+        if($formQuery) {
+            $query = $viniloRepository->getFindByVinilNameQuery($formQuery);
+            $message = "Vinils amb nom '". $formQuery."'";
+        }
+
+        #Paginació
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), #Nombre de la pàgina
+            4 #Llímit d'elements per pàgina,
+        );
 
         return $this->render('backoffice/_gestio_vinils.html.twig', [
             'controller_name' => 'BackOfficeController',
-            'vinilos' => $vinilos
+            'vinilos' => $pagination,
+            'artistas' => $artistas,
+            'message' => $message
         ]);
     }
 
@@ -195,6 +260,29 @@ class BackofficeController extends AbstractController
                 ]
             );
         }
+    }
+
+    #[Route('/backoffice/vinil/delete', name: 'deleteVinil')]
+    public function deleteVinil(ViniloRepository $viniloRepository, Request $request): Response
+    {
+        #Comprovació de que l'usuari no te vinils guardats
+        $idVinilo = $request->get('id');
+        $vinilo = $viniloRepository->findOneBy(['id' => $idVinilo]);
+
+        return $this->render('backoffice/delete_vinil.html.twig', [
+                'vinilo' => $vinilo
+            ]
+        );
+    }
+
+    #[Route('/{id}', name: 'app_edit_vinilo_delete', methods: ['POST'])]
+    public function delete(Request $request, Vinilo $vinilo, ViniloRepository $viniloRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$vinilo->getId(), $request->request->get('_token'))) {
+            $viniloRepository->remove($vinilo, true);
+        }
+
+        return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route(path: '/backoffice/{username}/vinils/saved', name: 'saved_vinils_backoffice')]

@@ -4,11 +4,11 @@
     <div class="container-fluid pb-4 d-flex">
         <div class="col-4"></div>
         <div class="col-4 mt-5">
-            <h3>Estàs segur de que vols eliminar aquest usuari?</h3>
+            <h3>Estàs segur de que vols eliminar aquest vinil?</h3>
             <div class="mb-3 d-flex flex-row justify-content-around">
                 <button class="btn btn-primary"><a style="text-decoration: none; color: white;" href="{{ path('gestioUsuaris') }}">Cancelar</a></button>
-                <form method="post" action="{{ path('app_edit_usuario_delete', {'id': usuario.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ usuario.id) }}">
+                <form method="post" action="{{ path('app_edit_vinilo_delete', {'id': vinilo.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ vinilo.id) }}">
                     <button class="btn btn-danger">Eliminar</button>
                 </form>
             </div>

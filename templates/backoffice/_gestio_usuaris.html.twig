@@ -3,6 +3,15 @@
 {% block main %}
     <div class="container-fluid pb-4 d-flex col-12">
         <div class="col-2 d-flex justify-content-start align-items-start mt-4 flex-column">
+            <div class="mb-3">
+                <h4>Buscador</h4>
+                <form class="d-flex flex-wrap" role="search" method="get">
+                    <input class="form-control me-2 mb-2" type="search" name="busqueda" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">
+                        Search
+                    </button>
+                </form>
+            </div>
             <h4>Filtre per Rol</h4>
             <li class="nav-item-dropdown list-unstyled">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

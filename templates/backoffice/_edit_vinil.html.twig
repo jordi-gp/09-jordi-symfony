@@ -1,0 +1,22 @@
+{% extends 'backoffice.html.twig' %}
+{% block title %}Backoffice - Registra un Vinil{% endblock %}
+{% block main %}
+    <div class="container-fluid pb-4 d-flex col-12">
+        <div class="col-2"></div>
+        <div class="col-8 d-flex flex-row mt-4 justify-content-center" style="gap: 20px; flex-wrap: wrap; border: 1px solid black; border-radius: 10px; background: lightblue">
+            <div class="col-8 mt-4 mb-2">
+                <h3 class="text-center">Edició de vinil</h3>
+                {{ form_start(form, { 'attr': { 'novalidate': 'novalidate' }}) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.price) }}
+                {{ form_row(form.artista) }}
+                {{ form_row(form.description) }}
+                <div class="text-center">
+                    <input type="submit" class="btn btn-outline-primary" value="Editar" />
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}

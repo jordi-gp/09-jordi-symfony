@@ -54,6 +54,14 @@ class UsuarioRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+    public function getFindByUsernameQuery(string $text): Query
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.username LIKE :name')
+            ->setParameter('name', '%'.$text.'%')
+            ->getQuery();
+    }
+
 //    /**
 //     * @return Usuario[] Returns an array of Usuario objects
 //     */
