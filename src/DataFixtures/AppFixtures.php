@@ -7,6 +7,7 @@ use App\Entity\Discografica;
 use App\Entity\Genero;
 use App\Entity\Usuario;
 use App\Entity\Vinilo;
+use Cassandra\Date;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -97,20 +98,19 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         #Artista
-        $artista = new Artista();
-        $artista->setName('Cicatriz');
-        $artista->setDescription('Grup punk dels anys 80.');
-        $artista->setPhoto('patrick.jpg');
-        $artista->setDiscografica($discografica);
+        $artista1 = new Artista();
+        $artista1->setName('Cicatriz');
+        $artista1->setDescription('Grup punk dels anys 80.');
+        $artista1->setPhoto('/assets/public/covers/63d8ff3083b38952171439.jpg');
+        $artista1->setDiscografica($discografica);
 
-        $manager->persist($artista);
-
+        $manager->persist($artista1);
 
         #Artista 2
         $artista2 = new Artista();
         $artista2->setName('Depresión Sonora');
         $artista2->setDescription('Grup de post-punk');
-        $artista2->setPhoto('patrick.jpg');
+        $artista2->setPhoto('/assets/public/covers/63d8ff3083b38952171439.jpg');
         $artista2->setDiscografica($discografica);
 
         $manager->persist($artista2);
@@ -118,7 +118,7 @@ class AppFixtures extends Fixture
         $artista3 = new Artista();
         $artista3->setName('El Pau');
         $artista3->setDescription('Cantautor català');
-        $artista3->setPhoto('patrick.jpg');
+        $artista3->setPhoto('/assets/public/covers/63d8ff3083b38952171439.jpg');
         $artista3->setDiscografica($discografica);
 
         $manager->persist($artista3);
@@ -133,23 +133,26 @@ class AppFixtures extends Fixture
         $manager->persist($artista4);
         $manager->flush();
 
-        /*$vinilo = new Vinilo();
-        $vinilo->setName('Default Vinil');
-        $vinilo->setCreatedAt(new DateTime());
-        $vinilo->setArtista($artista);
-        $vinilo->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
-        $vinilo->setPrice(99);
-        $vinilo->setRating(4.9);
-        $vinilo->setCover('patrick.jpg');
+        for($i=0; $i<8; $i++)
+        {
+            $viniloCopy = new Vinilo();
+            $viniloCopy->setName('Lorem Ipsum '.$i);
+            $viniloCopy->setCreatedAt(new DateTime());
+            $viniloCopy->setArtista($artista3);
+            $viniloCopy->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
+            $viniloCopy->setPrice(99);
+            $viniloCopy->setRating(4.9);
+            $viniloCopy->setCover('/assets/covers/homer.jpg');
 
-        $manager->persist($vinilo);
-        $manager->flush();*/
+            $manager->persist($viniloCopy);
+        }
+        $manager->flush();
 
         #Vinilo
         $vinilo = new Vinilo();
         $vinilo->setName('Inadaptados');
         $vinilo->setCreatedAt(new DateTime());
-        $vinilo->setArtista($artista);
+        $vinilo->setArtista($artista1);
         $vinilo->setDescription('Primer disc del grup Vasc');
         $vinilo->setPrice(15);
         $vinilo->setRating(4);
