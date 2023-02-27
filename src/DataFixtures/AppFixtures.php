@@ -23,6 +23,23 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        #Creació de gran quantitat d'usuaris per activar la pàginació en el backoffice
+        for($i=0; $i<10; $i++)
+        {
+            $user = new Usuario();
+            $user->setName('Usuario'.$i);
+            $user->setUsername('usuario'.$i);
+            $user->setEmail('user'.$i.'@gmail.com');
+            $plainPasswordT = "12341234";
+            $hashedPasswordT = $this->passwordHasher->hashPassword($user, $plainPasswordT);
+            $user->setPassword($hashedPasswordT);
+            $user->setRole("ROLE_ADMIN");
+            $user->setCreatedAt(new DateTime());
+
+            $manager->persist($user);
+        }
+        $manager->flush();
+
         #Usuario
         $usuario = new Usuario();
         $usuario->setName("Jordi");
